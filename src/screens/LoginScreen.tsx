@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   TextInput,
@@ -6,23 +6,43 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Api} from '../api/api';
 
-export const LoginScreen = () => {
+export const LoginScreen = ({token}) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   useEffect(() => {
     console.log('Tab3Screen effect');
   }, []);
 
-  const api = new Api();
-  console.log(api.login('Dailin', 'Ri123456'));
+  const handleLogin = async () => {
+    const api = new Api();
+    const res = await api.login(username, password);
+    AsyncStorage.setItem('token', JSON.stringify(res.data));
+  };
+
   return (
     <View style={localStyles.container}>
       <Text style={localStyles.logoText}>Control Horario</Text>
       <Text style={localStyles.myText}>Nombre de ususario</Text>
-      <TextInput style={localStyles.input} />
+      <TextInput
+        style={localStyles.input}
+        onChangeText={setUsername}
+        value={username}
+        placeholder="Usuario"
+        keyboardType="default"
+      />
       <Text style={localStyles.myText}>Contraseña</Text>
-      <TextInput secureTextEntry={true} style={localStyles.input} />
-      <TouchableOpacity style={localStyles.myBoton}>
+      <TextInput
+        secureTextEntry={true}
+        style={localStyles.input}
+        onChangeText={setPassword}
+        value={password}
+        placeholder="Usuario"
+        keyboardType="default"
+      />
+      <TouchableOpacity style={localStyles.myBoton} onPress={handleLogin}>
         <Text style={localStyles.textBoton}>Entrar</Text>
       </TouchableOpacity>
     </View>

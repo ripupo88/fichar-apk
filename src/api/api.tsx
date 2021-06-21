@@ -1,11 +1,21 @@
-import axios from 'axios';
+import axios, {AxiosRequestConfig} from 'axios';
 
 export class Api {
-  myAccios = axios.create({baseURL: 'http://localhost:3001'});
-
-  login(username: string, password: string) {
-    this.myAccios.post('auth/singin', {username, password}).then((res) => {
-      return res;
+  async login(username: string, password: string) {
+    var data = JSON.stringify({
+      username,
+      password,
     });
+
+    var config: AxiosRequestConfig = {
+      method: 'post',
+      url: 'http://10.0.2.2:3001/auth/singin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: data,
+    };
+
+    return await (await axios(config)).data;
   }
 }
