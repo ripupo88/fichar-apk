@@ -13,7 +13,7 @@ LogBox.ignoreLogs(['Sending']);
 
 const Tab = createMaterialTopTabNavigator();
 
-export const TopTabNavigator = () => {
+export const AdminNavigator = () => {
   const {top: paddingTop} = useSafeAreaInsets();
 
   return (

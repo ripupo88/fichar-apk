@@ -22,7 +22,7 @@ import {TopTabNavigator} from './TopTabNavigator';
 
 const Drawer = createDrawerNavigator();
 
-export const MenuLateral = () => {
+export const AdminLateral = () => {
   const {width} = useWindowDimensions();
 
   return (
@@ -60,7 +60,7 @@ const MenuInterno = ({
           }}
           onPress={() => navigation.navigate('Tabs')}>
           <Icon name="compass-outline" size={23} color="black" />
-          <Text style={styles.menuTexto}> Inicio</Text>
+          <Text style={styles.menuTexto}> Administración</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

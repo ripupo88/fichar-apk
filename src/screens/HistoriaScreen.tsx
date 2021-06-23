@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {Text, View} from 'react-native';
 import {DateTime} from 'luxon';
 
-export const Tab2Screen = () => {
+export const HistoriaScreen = () => {
   useEffect(() => {}, []);
 
   //   const date = DateTime.now().setLocale('es');

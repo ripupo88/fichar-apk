@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   TextInput,
@@ -9,22 +9,31 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Api} from '../api/api';
 
-export const LoginScreen = ({token}) => {
+export const LoginScreen = ({
+  token,
+  registro,
+}: {
+  token: Function;
+  registro: Function;
+}) => {
+  AsyncStorage.removeItem('token');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  useEffect(() => {
-    console.log('Tab3Screen effect');
-  }, []);
 
   const handleLogin = async () => {
     const api = new Api();
     const res = await api.login(username, password);
-    AsyncStorage.setItem('token', JSON.stringify(res.data));
+    console.log('req', res);
+    if (!res) {
+      return;
+    } else {
+      await AsyncStorage.setItem('token', JSON.stringify(res));
+      token(true);
+    }
   };
 
   return (
     <View style={localStyles.container}>
-      <Text style={localStyles.logoText}>Control Horario</Text>
       <Text style={localStyles.myText}>Nombre de ususario</Text>
       <TextInput
         style={localStyles.input}
@@ -35,8 +44,8 @@ export const LoginScreen = ({token}) => {
       />
       <Text style={localStyles.myText}>Contraseña</Text>
       <TextInput
-        secureTextEntry={true}
         style={localStyles.input}
+        secureTextEntry={true}
         onChangeText={setPassword}
         value={password}
         placeholder="Usuario"
@@ -44,6 +53,11 @@ export const LoginScreen = ({token}) => {
       />
       <TouchableOpacity style={localStyles.myBoton} onPress={handleLogin}>
         <Text style={localStyles.textBoton}>Entrar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={localStyles.registro}
+        onPress={() => registro(true)}>
+        <Text style={localStyles.regBoton}>Registrarse</Text>
       </TouchableOpacity>
     </View>
   );
@@ -80,9 +94,14 @@ const localStyles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
   },
-  logoText: {
-    position: 'absolute',
-    top: 40,
-    fontSize: 40,
+  regBoton: {
+    color: '#2d2dff',
+    fontSize: 13,
+    textDecorationLine: 'underline',
+  },
+  registro: {
+    marginTop: 40,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
   },
 });

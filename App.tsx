@@ -1,27 +1,58 @@
 import 'react-native-gesture-handler';
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthProvider} from './src/context/AuthContext';
 import {MenuLateral} from './src/navigator/MenuLateral';
 import {LoginScreen} from './src/screens/LoginScreen';
-import {useAsyncStorage} from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useState} from 'react';
-// import {SingInScreen} from './src/screens/SingInScreen';
+import {SingInScreen} from './src/screens/SingInScreen';
+import {LoadingScreen} from './src/screens/LoadingScreem';
+import jwt_decode from 'jwt-decode';
+import {TokenDecoded} from './src/types/types';
+import {AdminLateral} from './src/navigator/AdminLateral';
 
 const App = () => {
-  const [token, settoken] = useState<any>('');
+  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState<any>(false);
+  const [registro, setRegistro] = useState(false);
+  const [decoded, setDecoded] = useState<TokenDecoded>({
+    role: 'USER',
+    exp: 0,
+    iat: 0,
+    username: 'User',
+  });
 
-  useAsyncStorage('token')
-    .getItem()
-    .then((res) => settoken(res));
+  useEffect(() => {
+    AsyncStorage.getItem('token').then((res: any) => {
+      setLoading(false);
+      if (res) {
+        const myRes = JSON.parse(res);
+        setDecoded(jwt_decode(myRes.accesToken));
+        if (myRes?.accesToken) {
+          setToken(true);
+        }
+      }
+    });
+  }, [token]);
 
-  console.log(token);
   return (
     <NavigationContainer>
       <AppState>
-        {/* <SingInScreen /> */}
-        {token ? <MenuLateral /> : <LoginScreen token={settoken} />}
+        {loading ? (
+          <LoadingScreen />
+        ) : token ? (
+          decoded.role === 'USER' ? (
+            <MenuLateral />
+          ) : (
+            <AdminLateral />
+          )
+        ) : registro ? (
+          <SingInScreen registro={setRegistro} />
+        ) : (
+          <LoginScreen token={setToken} registro={setRegistro} />
+        )}
       </AppState>
     </NavigationContainer>
   );

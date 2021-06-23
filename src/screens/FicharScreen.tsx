@@ -7,7 +7,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import {StyleSheet} from 'react-native';
 import {styles} from '../theme/appTheme';
 
-export const Tab1Screen = () => {
+export const FicharScreen = () => {
   const [camara, setCamara] = useState<'front' | 'back'>('back');
   const [fichar, setFichar] = useState(false);
   const [time, setTime] = useState(25299990);
