@@ -19,6 +19,7 @@ import {
 import {styles} from '../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {TopTabNavigator} from './TopTabNavigator';
+import {CreaEmpresaScreen} from '../screens/CreaEmpresaScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +32,7 @@ export const AdminLateral = () => {
       drawerContent={(props) => <MenuInterno {...props} />}>
       <Drawer.Screen name="Tabs" component={TopTabNavigator} />
       <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
+      <Drawer.Screen name="CreaEmpresaScreen" component={CreaEmpresaScreen} />
     </Drawer.Navigator>
   );
 };
@@ -63,6 +65,15 @@ const MenuInterno = ({
           <Text style={styles.menuTexto}> Administración</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          style={{
+            ...styles.menuBoton,
+            ...localstyle.row,
+          }}
+          onPress={() => navigation.navigate('CreaEmpresaScreen')}>
+          <Icon name="add-circle-outline" size={23} color="black" />
+          <Text style={styles.menuTexto}> Crear Empresa</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={{
             ...styles.menuBoton,
