@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   View,
@@ -5,64 +6,65 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  ScrollView,
+  Keyboard,
 } from 'react-native';
-import {Api, Data} from '../api/api';
+import {Api, Empresa} from '../api/api';
 
-export const CreaEmpresaScreen = ({registro}: {registro: Function}) => {
+export const CreaEmpresaScreen = () => {
   const [alias, setAlias] = useState('');
-  const [raSocial, setraSocial] = useState('');
+  const [raSocial, setRaSocial] = useState('');
   const [cif, setCif] = useState('');
+  const navegate = useNavigation();
   const api = new Api();
 
-  const handleRegsitro = async () => {
-    const data: any = {
-      alias: alias,
-      nombre: raSocial,
+  const handleCreate = async () => {
+    const data: Empresa = {
+      alias,
+      name: raSocial,
       cif,
     };
-    const res = await api.Registro(data);
+    const res = await api.CreaEmpresa(data);
     console.log(res);
     if (res?.status === 201) {
-      registro(false);
+      setAlias('');
+      setRaSocial('');
+      setCif('');
+      Keyboard.dismiss();
+      navegate.goBack();
     }
   };
 
   return (
-    <ScrollView>
-      <View style={localStyles.container}>
-        <Text style={localStyles.logoText}>Nueva Empresa</Text>
-        <Text style={localStyles.myText}>Selecione un alias*</Text>
-        <TextInput
-          style={localStyles.input}
-          onChangeText={setAlias}
-          value={alias}
-          placeholder="Usuario"
-          keyboardType="default"
-        />
-        <Text style={localStyles.myText}>Razon social*</Text>
-        <TextInput
-          style={localStyles.input}
-          secureTextEntry={true}
-          onChangeText={setraSocial}
-          value={raSocial}
-          placeholder="Usuario"
-          keyboardType="default"
-        />
-        <Text style={localStyles.myText}>CIF*</Text>
-        <TextInput
-          secureTextEntry={true}
-          style={localStyles.input}
-          onChangeText={setCif}
-          value={cif}
-          placeholder="Usuario"
-          keyboardType="default"
-        />
-        <TouchableOpacity style={localStyles.myBoton} onPress={handleRegsitro}>
-          <Text style={localStyles.textBoton}>Crear</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    <View style={localStyles.container}>
+      <Text style={localStyles.logoText}>Nueva Empresa</Text>
+      <Text style={localStyles.myText}>Selecione un alias*</Text>
+      <TextInput
+        style={localStyles.input}
+        onChangeText={setAlias}
+        value={alias}
+        placeholder="Usuario"
+        keyboardType="default"
+      />
+      <Text style={localStyles.myText}>Razon social*</Text>
+      <TextInput
+        style={localStyles.input}
+        onChangeText={setRaSocial}
+        value={raSocial}
+        placeholder="Usuario"
+        keyboardType="default"
+      />
+      <Text style={localStyles.myText}>CIF*</Text>
+      <TextInput
+        style={localStyles.input}
+        onChangeText={setCif}
+        value={cif}
+        placeholder="Usuario"
+        keyboardType="default"
+      />
+      <TouchableOpacity style={localStyles.myBoton} onPress={handleCreate}>
+        <Text style={localStyles.textBoton}>Crear</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
