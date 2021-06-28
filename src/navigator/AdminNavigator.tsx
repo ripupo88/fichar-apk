@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {FicharScreen} from '../screens/FicharScreen';
 import {HistoriaScreen} from '../screens/HistoriaScreen';
 import {HorarioScreen} from '../screens/HorarioScreen';
+import {AdminScreen} from '../screens/AdminScreen';
 
 LogBox.ignoreLogs(['Sending']);
 
@@ -37,8 +38,8 @@ export const AdminNavigator = () => {
         tabBarIcon: ({color, focused}) => {
           let iconName: string = '';
           switch (route.name) {
-            case 'Fichar':
-              iconName = 'qr-code-outline';
+            case 'Admin':
+              iconName = 'eye-outline';
               break;
 
             case 'Historia':
@@ -53,7 +54,7 @@ export const AdminNavigator = () => {
           return <Icon name={iconName} size={20} color={color} />;
         },
       })}>
-      <Tab.Screen name="Fichar" component={FicharScreen} />
+      <Tab.Screen name="Admin" component={AdminScreen} />
       <Tab.Screen name="Historia" component={HistoriaScreen} />
       <Tab.Screen name="Horarios" component={HorarioScreen} />
     </Tab.Navigator>
