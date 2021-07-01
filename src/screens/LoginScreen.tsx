@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Api} from '../api/api';
@@ -34,6 +35,7 @@ export const LoginScreen = ({
 
   return (
     <View style={localStyles.container}>
+      <Image style={localStyles.img} source={require('../assets/clock.png')} />
       <Text style={localStyles.myText}>Nombre de ususario</Text>
       <TextInput
         style={localStyles.input}
@@ -68,15 +70,16 @@ const localStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f82ADE',
+    backgroundColor: '#f0f0f0',
   },
   input: {
     width: 250,
     height: 50,
     margin: 12,
     borderWidth: 1,
-    borderRadius: 15,
+    borderRadius: 100,
     fontSize: 20,
+    paddingHorizontal: 10,
     backgroundColor: 'white',
   },
   myText: {
@@ -87,7 +90,7 @@ const localStyles = StyleSheet.create({
     backgroundColor: '#942ADE',
     paddingHorizontal: 30,
     paddingVertical: 10,
-    borderRadius: 15,
+    borderRadius: 100,
     borderWidth: 1,
   },
   textBoton: {
@@ -100,8 +103,13 @@ const localStyles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   registro: {
-    marginTop: 40,
+    marginTop: 20,
     paddingHorizontal: 30,
     paddingVertical: 10,
+  },
+  img: {
+    width: 100,
+    height: 100,
+    marginBottom: 20,
   },
 });
