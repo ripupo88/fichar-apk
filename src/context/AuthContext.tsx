@@ -4,13 +4,11 @@ import AuthReducer from './AuthReducer';
 export interface AuthState {
   isLoggedin: boolean;
   userName?: string;
-  favoriteIcon?: string;
 }
 
 export const AuthInitialState: AuthState = {
   isLoggedin: false,
   userName: undefined,
-  favoriteIcon: undefined,
 };
 
 export interface AuthContextProps {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   TextInput,
@@ -9,17 +9,14 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Api} from '../api/api';
+import {styles} from '../theme/appTheme';
+import {useForm} from '../hooks/useForm';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export const LoginScreen = ({
-  token,
-  registro,
-}: {
-  token: Function;
-  registro: Function;
-}) => {
-  AsyncStorage.removeItem('token');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+interface Props extends StackScreenProps<any, any> {}
+
+export const LoginScreen = ({navigation}: Props) => {
+  const {password, username, onChange} = useForm({username: '', password: ''});
 
   const handleLogin = async () => {
     const api = new Api();
@@ -29,7 +26,6 @@ export const LoginScreen = ({
       return;
     } else {
       await AsyncStorage.setItem('token', JSON.stringify(res));
-      token(true);
     }
   };
 
@@ -38,19 +34,19 @@ export const LoginScreen = ({
       <Image style={localStyles.img} source={require('../assets/clock.png')} />
       <Text style={localStyles.myText}>Nombre de ususario</Text>
       <TextInput
-        style={localStyles.input}
-        onChangeText={setUsername}
+        style={styles.input}
+        onChangeText={(value) => onChange(value, 'username')}
         value={username}
         placeholder="Usuario"
         keyboardType="default"
       />
       <Text style={localStyles.myText}>Contraseña</Text>
       <TextInput
-        style={localStyles.input}
+        style={styles.input}
         secureTextEntry={true}
-        onChangeText={setPassword}
+        onChangeText={(value) => onChange(value, 'password')}
         value={password}
-        placeholder="Usuario"
+        placeholder="Contraseña"
         keyboardType="default"
       />
       <TouchableOpacity style={localStyles.myBoton} onPress={handleLogin}>
@@ -58,7 +54,7 @@ export const LoginScreen = ({
       </TouchableOpacity>
       <TouchableOpacity
         style={localStyles.registro}
-        onPress={() => registro(true)}>
+        onPress={() => navigation.replace('SingInScreen')}>
         <Text style={localStyles.regBoton}>Registrarse</Text>
       </TouchableOpacity>
     </View>
@@ -71,16 +67,6 @@ const localStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#f0f0f0',
-  },
-  input: {
-    width: 250,
-    height: 50,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 100,
-    fontSize: 20,
-    paddingHorizontal: 10,
-    backgroundColor: 'white',
   },
   myText: {
     fontSize: 18,

@@ -53,4 +53,14 @@ export const styles = StyleSheet.create({
   menuTexto: {
     fontSize: 20,
   },
+  input: {
+    width: 250,
+    height: 50,
+    margin: 12,
+    borderWidth: 1,
+    borderRadius: 100,
+    fontSize: 20,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
+  },
 });

@@ -12,7 +12,7 @@ export type Empresa = {
   cif: string;
 };
 export class Api {
-  baseUrl = 'http://10.0.2.2:3001';
+  baseUrl = 'http://192.168.1.42:3001';
 
   async login(username: string, password: string) {
     var data = JSON.stringify({

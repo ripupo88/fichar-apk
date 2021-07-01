@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import CheckBox from '@react-native-community/checkbox';
 import {
   View,
@@ -9,14 +9,29 @@ import {
   ScrollView,
 } from 'react-native';
 import {Api, Data} from '../api/api';
+import {styles} from '../theme/appTheme';
+import {useForm} from '../hooks/useForm';
+import {LoginForm} from '../interfaces/appInteface';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export const SingInScreen = ({registro}: {registro: Function}) => {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
-  const [user, setUser] = useState('');
-  const [code, setCode] = useState('');
+interface Props extends StackScreenProps<any, any> {}
+
+export const SingInScreen = ({navigation}: Props) => {
   const api = new Api();
+  const {
+    isAdmin,
+    password,
+    password2,
+    user,
+    code,
+    onChange,
+  } = useForm<LoginForm>({
+    isAdmin: false,
+    password: '',
+    password2: '',
+    user: '',
+    code: '',
+  });
 
   const handleRegsitro = async () => {
     const role = isAdmin ? 'ADMIN' : 'USER';
@@ -29,72 +44,81 @@ export const SingInScreen = ({registro}: {registro: Function}) => {
     const res = await api.Registro(data);
     console.log(res);
     if (res?.status === 201) {
-      registro(false);
     }
   };
 
   const setToggleCheckBox = () => {
-    setIsAdmin(!isAdmin);
+    onChange(!isAdmin, 'isAdmin');
   };
 
   return (
-    <ScrollView>
-      <View style={localStyles.container}>
-        <Text style={localStyles.logoText}>Nuevo usuario</Text>
-        <Text style={localStyles.myText}>Selecione un ususario*</Text>
-        <TextInput
-          style={localStyles.input}
-          onChangeText={setUser}
-          value={user}
-          placeholder="Usuario"
-          keyboardType="default"
-        />
-        <Text style={localStyles.myText}>Selecione una contraseña*</Text>
-        <TextInput
-          style={localStyles.input}
-          secureTextEntry={true}
-          onChangeText={setPassword}
-          value={password}
-          placeholder="Usuario"
-          keyboardType="default"
-        />
-        <Text style={localStyles.myText}>Repita la contraseña*</Text>
-        <TextInput
-          secureTextEntry={true}
-          style={localStyles.input}
-          onChangeText={setPassword2}
-          value={password2}
-          placeholder="Usuario"
-          keyboardType="default"
-        />
-        <Text style={localStyles.myText}>Código de empresa*</Text>
-        <TextInput
-          style={localStyles.input}
-          onChangeText={setCode}
-          value={code}
-          placeholder="Usuario"
-          keyboardType="numeric"
-        />
-        <View style={localStyles.box}>
-          <Text style={localStyles.myText}>¿Eres ADMIN?</Text>
-          <CheckBox
-            disabled={false}
-            value={isAdmin}
-            tintColors={{true: 'blue', false: 'white'}}
-            onValueChange={setToggleCheckBox}
+    <View style={localStyles.mainContainer}>
+      <ScrollView
+        style={localStyles.scrollStyle}
+        showsVerticalScrollIndicator={false}>
+        <View style={localStyles.container}>
+          <Text style={localStyles.logoText}>Nuevo usuario</Text>
+          <Text style={localStyles.myText}>Selecione un ususario*</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => onChange(value, 'user')}
+            value={user}
+            placeholder="Usuario"
+            keyboardType="default"
           />
-        </View>
+          <Text style={localStyles.myText}>Selecione una contraseña*</Text>
+          <TextInput
+            style={styles.input}
+            secureTextEntry={true}
+            onChangeText={(value) => onChange(value, 'password')}
+            value={password}
+            placeholder="Contraseña"
+            keyboardType="default"
+          />
+          <Text style={localStyles.myText}>Repita la contraseña*</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.input}
+            onChangeText={(value) => onChange(value, 'password2')}
+            value={password2}
+            placeholder="Contraseña"
+            keyboardType="default"
+          />
+          {!isAdmin && (
+            <>
+              <Text style={localStyles.myText}>Código de empresa*</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={(value) => onChange(value, 'code')}
+                value={code}
+                placeholder="Código"
+                keyboardType="numeric"
+              />
+            </>
+          )}
+          <View style={localStyles.box}>
+            <Text style={localStyles.myText}>¿Eres ADMIN?</Text>
+            <CheckBox
+              disabled={false}
+              value={isAdmin}
+              tintColors={{true: 'blue', false: 'Black'}}
+              onValueChange={setToggleCheckBox}
+            />
+          </View>
 
-        <TouchableOpacity style={localStyles.myBoton} onPress={handleRegsitro}>
-          <Text style={localStyles.textBoton}>Registrarse</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={localStyles.registro}
-          onPress={() => registro(false)}>
-          <Text style={localStyles.regBoton}>¿Ya tienes cuenta?</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+          <TouchableOpacity
+            style={localStyles.myBoton}
+            onPress={handleRegsitro}>
+            <Text style={localStyles.textBoton}>Registrarse</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={localStyles.registro}
+            onPress={() => navigation.replace('LoginScreen')}>
+            <Text style={localStyles.regBoton}>¿Ya tienes cuenta?</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -103,16 +127,7 @@ const localStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f82ADE',
-  },
-  input: {
-    width: 250,
-    height: 50,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 15,
-    fontSize: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#f0f0f0',
   },
   myText: {
     fontSize: 18,
@@ -122,16 +137,16 @@ const localStyles = StyleSheet.create({
     backgroundColor: '#942ADE',
     paddingHorizontal: 30,
     paddingVertical: 10,
-    borderRadius: 15,
+    borderRadius: 100,
     borderWidth: 1,
-    marginBottom: 50,
+    marginBottom: 20,
   },
   textBoton: {
     color: 'white',
     fontSize: 18,
   },
   logoText: {
-    marginBottom: 20,
+    marginVertical: 25,
     fontSize: 35,
   },
   box: {
@@ -148,5 +163,14 @@ const localStyles = StyleSheet.create({
     color: '#2d2dff',
     fontSize: 13,
     textDecorationLine: 'underline',
+  },
+  mainContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f0f0f0',
+  },
+  scrollStyle: {
+    width: '100%',
   },
 });
