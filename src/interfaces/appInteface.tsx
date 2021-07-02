@@ -5,3 +5,11 @@ export interface LoginForm {
   user: string;
   code: string;
 }
+
+export interface UserData {
+  _id: string;
+  username: string;
+  editable: boolean;
+  empresas: string[];
+  role: 'ADMIN' | 'USER';
+}
