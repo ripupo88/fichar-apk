@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {
   createDrawerNavigator,
@@ -19,6 +19,7 @@ import {
 import {styles} from '../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {TopTabNavigator} from './TopTabNavigator';
+import {AuthContext} from '../context/AuthContext';
 
 const Drawer = createDrawerNavigator();
 
@@ -38,6 +39,7 @@ export const MenuLateral = () => {
 const MenuInterno = ({
   navigation,
 }: DrawerContentComponentProps<DrawerContentOptions>) => {
+  const {LogOut} = useContext(AuthContext);
   return (
     <DrawerContentScrollView>
       {/* Parte del avatar */}
@@ -71,6 +73,15 @@ const MenuInterno = ({
           onPress={() => navigation.navigate('SettingsScreen')}>
           <Icon name="cog-outline" size={23} color="black" />
           <Text style={styles.menuTexto}> Ajustes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            ...styles.menuBoton,
+            ...localstyle.row,
+          }}
+          onPress={() => LogOut()}>
+          <Icon name="log-out-outline" size={23} color="black" />
+          <Text style={styles.menuTexto}> Salir</Text>
         </TouchableOpacity>
       </View>
     </DrawerContentScrollView>

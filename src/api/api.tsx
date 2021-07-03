@@ -4,7 +4,7 @@ export type Data = {
   username: string;
   password: string;
   role: 'ADMIN' | 'USER';
-  code: string;
+  code?: string;
 };
 export type Empresa = {
   alias: string;
@@ -12,7 +12,7 @@ export type Empresa = {
   cif: string;
 };
 export class Api {
-  baseUrl = 'http://192.168.230.121:3001';
+  baseUrl = 'http://192.168.1.42:3001'; //192.168.1.42
 
   async login(username: string, password: string) {
     var data = JSON.stringify({
@@ -43,6 +43,7 @@ export class Api {
       return error[0];
     }
   };
+
   async Registro(data: Data) {
     var mydata = JSON.stringify(data);
     var config: AxiosRequestConfig = {
@@ -52,6 +53,25 @@ export class Api {
         'Content-Type': 'application/json',
       },
       data: mydata,
+    };
+    try {
+      return await (await axios(config)).data;
+    } catch (error) {
+      if (error.response) {
+        return this.getError(error.response.data.message);
+      }
+    }
+  }
+
+  async Token(token: string) {
+    var config: AxiosRequestConfig = {
+      method: 'post',
+      url: this.baseUrl + '/auth/singup',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      data: {token},
     };
     try {
       return await (await axios(config)).data;

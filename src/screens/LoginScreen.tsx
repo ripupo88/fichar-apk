@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   View,
   TextInput,
@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  Alert,
 } from 'react-native';
 import {styles} from '../theme/appTheme';
 import {useForm} from '../hooks/useForm';
@@ -16,9 +17,27 @@ interface Props extends StackScreenProps<any, any> {}
 
 export const LoginScreen = ({navigation}: Props) => {
   const {password, username, onChange} = useForm({username: '', password: ''});
-  const {logIn} = useContext(AuthContext);
+  const {
+    logIn,
+    gotError,
+    state: {error},
+  } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (error !== '') {
+      onChange('', 'username');
+      Alert.alert('Ha ocurrido un error', error, [
+        {
+          text: 'ok',
+          onPress: () => gotError(''),
+        },
+      ]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
 
   const handleLogin = async () => {
+    onChange('', 'password');
     logIn(username, password);
   };
 

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import CheckBox from '@react-native-community/checkbox';
 import {
   View,
@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {styles} from '../theme/appTheme';
 import {useForm} from '../hooks/useForm';
@@ -18,8 +19,11 @@ import {Data} from '../api/api';
 interface Props extends StackScreenProps<any, any> {}
 
 export const SingInScreen = ({navigation}: Props) => {
-  const {SingUp} = useContext(AuthContext);
-
+  const {
+    SingUp,
+    gotError,
+    state: {error},
+  } = useContext(AuthContext);
   const {
     isAdmin,
     password,
@@ -35,14 +39,32 @@ export const SingInScreen = ({navigation}: Props) => {
     code: '',
   });
 
+  useEffect(() => {
+    if (error !== '') {
+      Alert.alert('Ha ocurrido un error', error, [
+        {
+          text: 'ok',
+          onPress: () => gotError(''),
+        },
+      ]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
+
   const handleRegsitro = async () => {
+    if (password !== password2) {
+      gotError('la contraseña debe ser igual');
+      return;
+    }
     const role = isAdmin ? 'ADMIN' : 'USER';
-    const data: Data = {
+    let data: Data = {
       username: user,
       password: password,
       role,
-      code,
     };
+    if (!isAdmin) {
+      data = {...data, code};
+    }
     SingUp(data);
   };
 
