@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   TextInput,
@@ -7,26 +7,19 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Api} from '../api/api';
 import {styles} from '../theme/appTheme';
 import {useForm} from '../hooks/useForm';
 import {StackScreenProps} from '@react-navigation/stack';
+import {AuthContext} from '../context/AuthContext';
 
 interface Props extends StackScreenProps<any, any> {}
 
 export const LoginScreen = ({navigation}: Props) => {
   const {password, username, onChange} = useForm({username: '', password: ''});
+  const {logIn} = useContext(AuthContext);
 
   const handleLogin = async () => {
-    const api = new Api();
-    const res = await api.login(username, password);
-    console.log('req', res);
-    if (!res) {
-      return;
-    } else {
-      await AsyncStorage.setItem('token', JSON.stringify(res));
-    }
+    logIn(username, password);
   };
 
   return (

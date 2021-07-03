@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import CheckBox from '@react-native-community/checkbox';
 import {
   View,
@@ -8,16 +8,18 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {Api, Data} from '../api/api';
 import {styles} from '../theme/appTheme';
 import {useForm} from '../hooks/useForm';
 import {LoginForm} from '../interfaces/appInteface';
 import {StackScreenProps} from '@react-navigation/stack';
+import {AuthContext} from '../context/AuthContext';
+import {Data} from '../api/api';
 
 interface Props extends StackScreenProps<any, any> {}
 
 export const SingInScreen = ({navigation}: Props) => {
-  const api = new Api();
+  const {SingUp} = useContext(AuthContext);
+
   const {
     isAdmin,
     password,
@@ -41,10 +43,7 @@ export const SingInScreen = ({navigation}: Props) => {
       role,
       code,
     };
-    const res = await api.Registro(data);
-    console.log(res);
-    if (res?.status === 201) {
-    }
+    SingUp(data);
   };
 
   const setToggleCheckBox = () => {

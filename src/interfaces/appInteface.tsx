@@ -13,3 +13,8 @@ export interface UserData {
   empresas: string[];
   role: 'ADMIN' | 'USER';
 }
+
+export interface loginRes {
+  accesToken: string;
+  user: UserData;
+}
