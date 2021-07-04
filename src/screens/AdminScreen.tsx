@@ -9,7 +9,8 @@ export const AdminScreen = () => {
     <View style={localstyle.constainer}>
       <ScrollView>
         <View>
-          <Text style={localstyle.title1}> Tus empresas </Text>
+          <Text style={localstyle.title1}> Actividad </Text>
+          {/* <SectionList  /> */}
         </View>
       </ScrollView>
     </View>
@@ -19,7 +20,7 @@ export const AdminScreen = () => {
 const localstyle = StyleSheet.create({
   constainer: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: '#f0f0f0',
   },
   title1: {
     marginTop: 20,

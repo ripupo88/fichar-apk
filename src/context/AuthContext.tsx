@@ -10,6 +10,7 @@ export interface AuthState {
   error: '';
   user?: UserData;
   loading: boolean;
+  token: string;
 }
 
 export const AuthInitialState: AuthState = {
@@ -17,6 +18,7 @@ export const AuthInitialState: AuthState = {
   isLoggedin: false,
   user: undefined,
   loading: true,
+  token: '',
 };
 
 export interface AuthContextProps {
@@ -40,12 +42,18 @@ export const AuthProvider = ({children}: any) => {
     const token = await AsyncStorage.getItem('token');
     if (typeof token === 'string' && token !== '') {
       const res = await api.Token(token);
-      console.log(res);
-      if (typeof res !== 'undefined') {
-        dispatch({type: 'LogIn', payload: res.user});
+      if (typeof res !== 'undefined' && typeof res !== 'string') {
         console.log(res);
+        dispatch({
+          type: 'LogIn',
+          payload: {user: res.user, token: res.accesToken},
+        });
+      } else {
+        AsyncStorage.removeItem('token');
+        dispatch({type: 'NoToken'});
       }
     } else {
+      console.log('object');
       dispatch({type: 'NoToken'});
     }
   };
@@ -58,7 +66,10 @@ export const AuthProvider = ({children}: any) => {
       gotError('Revise sus credenciales');
     } else {
       if (typeof res !== 'undefined') {
-        dispatch({type: 'LogIn', payload: res.user});
+        dispatch({
+          type: 'LogIn',
+          payload: {user: res.user, token: res.accesToken},
+        });
         await AsyncStorage.setItem('token', res.accesToken);
       } else {
         gotError('Ha ocurrido un error');
@@ -73,7 +84,11 @@ export const AuthProvider = ({children}: any) => {
     if (typeof res === 'string') {
       gotError(res);
     } else {
-      dispatch({type: 'LogIn', payload: res.user});
+      dispatch({
+        type: 'LogIn',
+        payload: {user: res.user, token: res.accesToken},
+      });
+      await AsyncStorage.setItem('token', res.accesToken);
     }
   };
 

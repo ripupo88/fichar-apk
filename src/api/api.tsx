@@ -12,7 +12,7 @@ export type Empresa = {
   cif: string;
 };
 export class Api {
-  baseUrl = 'http://192.168.1.42:3001'; //192.168.1.42
+  baseUrl = 'http://192.168.230.121:3001'; //192.168.1.42
 
   async login(username: string, password: string) {
     var data = JSON.stringify({
@@ -66,7 +66,7 @@ export class Api {
   async Token(token: string) {
     var config: AxiosRequestConfig = {
       method: 'post',
-      url: this.baseUrl + '/auth/singup',
+      url: this.baseUrl + '/auth/token',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -82,15 +82,38 @@ export class Api {
     }
   }
 
-  async CreaEmpresa(data: Empresa) {
+  async CreaEmpresa(data: Empresa, token: string) {
+    console.log(token);
     const mydata = JSON.stringify(data);
     console.log(mydata);
     const config: AxiosRequestConfig = {
       method: 'post',
       url: this.baseUrl + '/empresas',
       headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlN1cmV5YSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYyNDU4NTg3NCwiZXhwIjoxNjI3MTc3ODc0fQ.C-TiT6DeuH1xhloBzX3NPhcXe5AxYopcp58uyow4yX4',
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      data: mydata,
+    };
+    try {
+      return await axios(config);
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      }
+    }
+  }
+  async GetEmpresa(data: Empresa, token: string) {
+    console.log(token);
+    const mydata = JSON.stringify(data);
+    console.log(mydata);
+    const config: AxiosRequestConfig = {
+      method: 'post',
+      url: this.baseUrl + '/empresas',
+      headers: {
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       data: mydata,

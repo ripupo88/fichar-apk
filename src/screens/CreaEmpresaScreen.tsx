@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   View,
   TextInput,
@@ -7,8 +7,10 @@ import {
   Text,
   TouchableOpacity,
   Keyboard,
+  Alert,
 } from 'react-native';
 import {Api, Empresa} from '../api/api';
+import {AuthContext} from '../context/AuthContext';
 
 export const CreaEmpresaScreen = () => {
   const [alias, setAlias] = useState('');
@@ -16,6 +18,9 @@ export const CreaEmpresaScreen = () => {
   const [cif, setCif] = useState('');
   const navegate = useNavigation();
   const api = new Api();
+  const {
+    state: {token},
+  } = useContext(AuthContext);
 
   const handleCreate = async () => {
     const data: Empresa = {
@@ -23,7 +28,7 @@ export const CreaEmpresaScreen = () => {
       name: raSocial,
       cif,
     };
-    const res = await api.CreaEmpresa(data);
+    const res = await api.CreaEmpresa(data, token);
     console.log(res);
     if (res?.status === 201) {
       setAlias('');
@@ -31,6 +36,11 @@ export const CreaEmpresaScreen = () => {
       setCif('');
       Keyboard.dismiss();
       navegate.goBack();
+    } else {
+      Alert.alert(
+        'Ah ocurrido un error',
+        'intentelo más tarde o contacte al administrador',
+      );
     }
   };
 
@@ -73,12 +83,13 @@ const localStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f82ADE',
+    backgroundColor: '#f0f0f0',
   },
   input: {
     width: 250,
     height: 50,
     margin: 12,
+    paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 15,
     fontSize: 20,
