@@ -29,7 +29,6 @@ export const CreaEmpresaScreen = () => {
       cif,
     };
     const res = await api.CreaEmpresa(data, token);
-    console.log(res);
     if (res?.status === 201) {
       setAlias('');
       setRaSocial('');

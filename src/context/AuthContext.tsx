@@ -33,17 +33,18 @@ export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({children}: any) => {
   const [state, dispatch] = useReducer(AuthReducer, AuthInitialState);
+  const api = new Api();
   useEffect(() => {
     loginByToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loginByToken = async () => {
-    const api = new Api();
     const token = await AsyncStorage.getItem('token');
     if (typeof token === 'string' && token !== '') {
       const res = await api.Token(token);
       if (typeof res !== 'undefined' && typeof res !== 'string') {
-        console.log(res);
+        await AsyncStorage.setItem('token', res.accesToken);
         dispatch({
           type: 'LogIn',
           payload: {user: res.user, token: res.accesToken},
@@ -59,18 +60,16 @@ export const AuthProvider = ({children}: any) => {
   };
 
   const logIn = async (username: string, password: string) => {
-    const api = new Api();
     const res: loginRes = await api.login(username, password);
-
     if (typeof res === 'string') {
       gotError('Revise sus credenciales');
     } else {
       if (typeof res !== 'undefined') {
+        await AsyncStorage.setItem('token', res.accesToken);
         dispatch({
           type: 'LogIn',
           payload: {user: res.user, token: res.accesToken},
         });
-        await AsyncStorage.setItem('token', res.accesToken);
       } else {
         gotError('Ha ocurrido un error');
       }
@@ -78,7 +77,6 @@ export const AuthProvider = ({children}: any) => {
   };
 
   const SingUp = async (data: Data) => {
-    const api = new Api();
     const res: loginRes = await api.Registro(data);
     console.log('res', res);
     if (typeof res === 'string') {

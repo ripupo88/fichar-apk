@@ -8,13 +8,26 @@ export interface LoginForm {
 
 export interface UserData {
   _id: string;
+  alias?: string;
   username: string;
   editable: boolean;
-  empresas: string[];
-  role: 'ADMIN' | 'USER';
+  horaEntrada?: string;
+  trabajando?: boolean;
+  empresas?: string[];
+  role?: 'ADMIN' | 'USER';
+  fullName?: string;
+  nif?: string;
+  activo?: boolean;
+  trabajaPara?: string;
 }
 
 export interface loginRes {
   accesToken: string;
   user: UserData;
+}
+export interface GetEmpresa {
+  alias: string;
+  name: string;
+  cif: string;
+  data?: UserData[];
 }

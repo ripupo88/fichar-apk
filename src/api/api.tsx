@@ -105,26 +105,20 @@ export class Api {
       }
     }
   }
-  async GetEmpresa(data: Empresa, token: string) {
-    console.log(token);
-    const mydata = JSON.stringify(data);
-    console.log(mydata);
+  async GetEmpresa(token: string) {
     const config: AxiosRequestConfig = {
-      method: 'post',
+      method: 'get',
       url: this.baseUrl + '/empresas',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      data: mydata,
     };
     try {
-      return await axios(config);
+      return await (await axios(config)).data;
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
+        return this.getError(error.response.data.message);
       }
     }
   }
