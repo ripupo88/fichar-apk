@@ -42,12 +42,12 @@ export const AdminNavigator = () => {
               iconName = 'eye-outline';
               break;
 
-            case 'Historia':
-              iconName = 'return-up-back-outline';
+            case 'Buzón':
+              iconName = 'albums-outline';
               break;
 
-            case 'Horarios':
-              iconName = 'alarm-outline';
+            case 'Datos':
+              iconName = 'analytics-outline';
               break;
           }
 
@@ -55,8 +55,8 @@ export const AdminNavigator = () => {
         },
       })}>
       <Tab.Screen name="Admin" component={AdminScreen} />
-      <Tab.Screen name="Historia" component={HistoriaScreen} />
-      <Tab.Screen name="Horarios" component={HorarioScreen} />
+      <Tab.Screen name="Buzón" component={HistoriaScreen} />
+      <Tab.Screen name="Datos" component={HorarioScreen} />
     </Tab.Navigator>
   );
 };

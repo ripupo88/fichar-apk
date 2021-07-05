@@ -4,6 +4,12 @@ import {useEffect} from 'react';
 import {Api, Data} from '../api/api';
 import {loginRes, UserData} from '../interfaces/appInteface';
 import AuthReducer from './AuthReducer';
+import {
+  getUniqueId,
+  getDeviceName,
+  getModel,
+  getBrand,
+} from 'react-native-device-info';
 
 export interface AuthState {
   isLoggedin: boolean;

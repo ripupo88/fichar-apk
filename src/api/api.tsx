@@ -1,4 +1,10 @@
 import axios, {AxiosRequestConfig} from 'axios';
+import {
+  getUniqueId,
+  getDeviceName,
+  getModel,
+  getBrand,
+} from 'react-native-device-info';
 
 export type Data = {
   username: string;
@@ -12,7 +18,7 @@ export type Empresa = {
   cif: string;
 };
 export class Api {
-  baseUrl = 'http://192.168.230.121:3001'; //192.168.1.42
+  baseUrl = 'http://192.168.1.42:3001'; //192.168.1.42
 
   async login(username: string, password: string) {
     var data = JSON.stringify({
