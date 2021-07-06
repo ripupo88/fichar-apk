@@ -1,41 +1,26 @@
 import React from 'react';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
-import {LogBox, Text} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {colores} from '../theme/appTheme';
+import {LogBox, StyleSheet} from 'react-native';
+// import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {FicharScreen} from '../screens/FicharScreen';
 import {HistoriaScreen} from '../screens/HistoriaScreen';
 import {HorarioScreen} from '../screens/HorarioScreen';
 import {AdminScreen} from '../screens/AdminScreen';
 
 LogBox.ignoreLogs(['Sending']);
 
-const Tab = createMaterialTopTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 export const AdminNavigator = () => {
-  const {top: paddingTop} = useSafeAreaInsets();
+  // const {top: paddingTop} = useSafeAreaInsets();
 
   return (
     <Tab.Navigator
-      style={{paddingTop}}
-      sceneContainerStyle={{
-        backgroundColor: 'white',
-      }}
-      tabBarOptions={{
-        pressColor: colores.primary,
-        showIcon: true,
-        indicatorStyle: {
-          backgroundColor: colores.primary,
-        },
-        style: {
-          shadowColor: 'transparent',
-          elevation: 0,
-        },
-      }}
+      style={localstyle.container}
+      barStyle={localstyle.barstyle}
       screenOptions={({route}) => ({
-        tabBarIcon: ({color, focused}) => {
+        tabBarIcon: ({color}) => {
           let iconName: string = '';
           switch (route.name) {
             case 'Admin':
@@ -51,12 +36,21 @@ export const AdminNavigator = () => {
               break;
           }
 
-          return <Icon name={iconName} size={20} color={color} />;
+          return <Icon name={iconName} size={22} color={color} />;
         },
       })}>
       <Tab.Screen name="Admin" component={AdminScreen} />
-      <Tab.Screen name="Buzón" component={HistoriaScreen} />
+      <Tab.Screen
+        name="Buzón"
+        component={HistoriaScreen}
+        options={{tabBarBadge: 3}}
+      />
       <Tab.Screen name="Datos" component={HorarioScreen} />
     </Tab.Navigator>
   );
 };
+
+const localstyle = StyleSheet.create({
+  container: {backgroundColor: 'red'},
+  barstyle: {backgroundColor: 'white'},
+});

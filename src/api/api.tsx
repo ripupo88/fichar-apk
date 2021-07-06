@@ -17,8 +17,13 @@ export type Empresa = {
   name: string;
   cif: string;
 };
+export type Usuario = {
+  alias: string;
+  fullName: string;
+  nif: string;
+};
 export class Api {
-  baseUrl = 'http://192.168.1.42:3001'; //192.168.1.42
+  baseUrl = 'http://192.168.230.121:3001'; //192.168.1.42
 
   async login(username: string, password: string) {
     var data = JSON.stringify({
@@ -125,6 +130,29 @@ export class Api {
     } catch (error) {
       if (error.response) {
         return this.getError(error.response.data.message);
+      }
+    }
+  }
+
+  async CreaUsuario(data: Usuario, token: string) {
+    const mydata = JSON.stringify(data);
+    console.log(mydata);
+    const config: AxiosRequestConfig = {
+      method: 'post',
+      url: this.baseUrl + '/auth/activate',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      data: mydata,
+    };
+    try {
+      return await axios(config);
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
       }
     }
   }

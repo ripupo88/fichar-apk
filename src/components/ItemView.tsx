@@ -1,14 +1,17 @@
+import {useNavigation} from '@react-navigation/native';
+import {StackScreenProps} from '@react-navigation/stack';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {UserData} from '../interfaces/appInteface';
 
-type Props = {
+interface Props extends StackScreenProps<any, any> {
   user: UserData;
-};
+}
 
 export const ItemView = ({user}: Props) => {
+  const navigator = useNavigation();
   const {username, trabajando, horaEntrada, alias, editable} = user;
 
   let name: string = '';
@@ -41,7 +44,10 @@ export const ItemView = ({user}: Props) => {
             name={'information-circle-outline'}
           />
         )}
-        <Text style={localstyles.text}>{name}</Text>
+        <TouchableOpacity
+          onPress={() => navigator.navigate('CreaUsuarioScreen')}>
+          <Text style={localstyles.text}>{name}</Text>
+        </TouchableOpacity>
       </View>
       <View style={localstyles.subContainer}>
         <Text style={localstyles.text2}>{fecha}</Text>
@@ -54,6 +60,7 @@ export const ItemView = ({user}: Props) => {
 const localstyles = StyleSheet.create({
   text: {
     fontSize: 16,
+    marginBottom: 6,
   },
   text3: {
     fontSize: 16,

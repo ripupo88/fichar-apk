@@ -1,3 +1,4 @@
+import {useNavigationState} from '@react-navigation/native';
 import React, {useContext, useEffect, useState} from 'react';
 import {
   Text,
@@ -8,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {Api} from '../api/api';
+import {Header} from '../components/Header';
 import {ItemView} from '../components/ItemView';
 import {AuthContext} from '../context/AuthContext';
 import {GetEmpresa} from '../interfaces/appInteface';
@@ -18,14 +20,18 @@ export const AdminScreen = () => {
   const {
     state: {token},
   } = useContext(AuthContext);
+  const index = useNavigationState((state) => state.index);
 
   useEffect(() => {
-    getRes();
+    if (index === 0) {
+      getRes();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [index]);
 
   const api = new Api();
   const getRes = async () => {
+    console.log('llama');
     const res: GetEmpresa = await api.GetEmpresa(token);
     setData(res);
     setLoading(false);
@@ -37,15 +43,20 @@ export const AdminScreen = () => {
         {Loading && apidata === null ? (
           <ActivityIndicator />
         ) : (
-          <SectionList
-            sections={apidata}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item, index) => item._id + index}
-            renderItem={({item}) => <ItemView user={item} />}
-            renderSectionHeader={({section: {alias}}) => (
-              <Text style={localstyle.title1}> {alias} </Text>
-            )}
-          />
+          <>
+            <Header text={'Tus Empresas'} />
+            <SectionList
+              sections={apidata}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={(item, index) => item._id + index}
+              renderItem={({item}) => <ItemView user={item} />}
+              renderSectionHeader={({section: {alias}}) => (
+                <View style={localstyle.titleCont}>
+                  <Text style={localstyle.title1}> {alias} </Text>
+                </View>
+              )}
+            />
+          </>
         )}
       </View>
     </View>
@@ -58,9 +69,16 @@ const localstyle = StyleSheet.create({
     backgroundColor: '#f0f0f0',
   },
   title1: {
-    marginTop: 20,
     fontSize: 20,
-    alignSelf: 'center',
+  },
+  titleCont: {
+    borderWidth: 0.4,
+    borderBottomColor: '#000000aa',
+    marginTop: 8,
+    backgroundColor: 'white',
+    paddingVertical: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   container: {
     flex: 1,

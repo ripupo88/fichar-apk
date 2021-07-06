@@ -7,6 +7,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {LogInNavegation} from './LogInNavegation';
 import {useContext} from 'react';
 import {AuthContext} from '../context/AuthContext';
+import {CreaUsuarioScreen} from '../screens/CreaUsuarioScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,7 +23,13 @@ export const MainNavegation = () => {
       ) : !isLoggedin ? (
         <Stack.Screen name="LogInNavegation" component={LogInNavegation} />
       ) : role === 'ADMIN' ? (
-        <Stack.Screen name="AdminLateral" component={AdminLateral} />
+        <>
+          <Stack.Screen name="AdminLateral" component={AdminLateral} />
+          <Stack.Screen
+            name="CreaUsuarioScreen"
+            component={CreaUsuarioScreen}
+          />
+        </>
       ) : (
         <Stack.Screen name="MenuLateral" component={MenuLateral} />
       )}
