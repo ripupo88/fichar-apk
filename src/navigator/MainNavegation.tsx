@@ -8,6 +8,7 @@ import {LogInNavegation} from './LogInNavegation';
 import {useContext} from 'react';
 import {AuthContext} from '../context/AuthContext';
 import {CreaUsuarioScreen} from '../screens/CreaUsuarioScreen';
+import {UserScreen} from '../screens/UserScreen';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ export const MainNavegation = () => {
             name="CreaUsuarioScreen"
             component={CreaUsuarioScreen}
           />
+          <Stack.Screen name="UserScreen" component={UserScreen} />
         </>
       ) : (
         <Stack.Screen name="MenuLateral" component={MenuLateral} />

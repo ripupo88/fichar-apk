@@ -5,7 +5,8 @@ type Action =
   | {type: 'LogIn'; payload: {user: UserData; token: string}}
   | {type: 'LogOut'; payload?: any}
   | {type: 'Error'; payload: string}
-  | {type: 'NoToken'; payload?: any};
+  | {type: 'NoToken'; payload?: any}
+  | {type: 'NotifToken'; payload: string};
 
 export default (state: AuthState, {type, payload}: Action): AuthState => {
   switch (type) {

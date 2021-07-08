@@ -1,16 +1,11 @@
 import axios, {AxiosRequestConfig} from 'axios';
-import {
-  getUniqueId,
-  getDeviceName,
-  getModel,
-  getBrand,
-} from 'react-native-device-info';
 
 export type Data = {
   username: string;
   password: string;
   role: 'ADMIN' | 'USER';
   code?: string;
+  notifToken: string;
 };
 export type Empresa = {
   alias: string;
@@ -21,14 +16,16 @@ export type Usuario = {
   alias: string;
   fullName: string;
   nif: string;
+  username: string;
 };
 export class Api {
-  baseUrl = 'http://192.168.230.121:3001'; //192.168.1.42
+  baseUrl = 'http://192.168.1.42:3001'; //192.168.1.42
 
-  async login(username: string, password: string) {
+  async login(username: string, password: string, notifToken: string) {
     var data = JSON.stringify({
       username,
       password,
+      notifToken,
     });
 
     var config: AxiosRequestConfig = {
@@ -57,6 +54,7 @@ export class Api {
 
   async Registro(data: Data) {
     var mydata = JSON.stringify(data);
+    console.log(data);
     var config: AxiosRequestConfig = {
       method: 'post',
       url: this.baseUrl + '/auth/singup',

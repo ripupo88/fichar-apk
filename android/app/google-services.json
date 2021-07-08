@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "939835203362",
+    "project_id": "ficharapk",
+    "storage_bucket": "ficharapk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939835203362:android:1f365213007c68d956cf7b",
+        "android_client_info": {
+          "package_name": "com.ficharapk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "939835203362-b38gpeir0a4fdh97ogatq0000jgo6dr4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfTxbp3mM57yTFhdjgKi9Kv2pLaClut1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "939835203362-b38gpeir0a4fdh97ogatq0000jgo6dr4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

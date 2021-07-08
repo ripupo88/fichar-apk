@@ -4,19 +4,21 @@ import {useEffect} from 'react';
 import {Api, Data} from '../api/api';
 import {loginRes, UserData} from '../interfaces/appInteface';
 import AuthReducer from './AuthReducer';
+import PushNotification from 'react-native-push-notification';
 import {
   getUniqueId,
   getDeviceName,
   getModel,
   getBrand,
 } from 'react-native-device-info';
-
+let notifToken: string = '';
 export interface AuthState {
   isLoggedin: boolean;
   error: '';
   user?: UserData;
   loading: boolean;
   token: string;
+  NotifToken: string;
 }
 
 export const AuthInitialState: AuthState = {
@@ -25,6 +27,7 @@ export const AuthInitialState: AuthState = {
   user: undefined,
   loading: true,
   token: '',
+  NotifToken: '',
 };
 
 export interface AuthContextProps {
@@ -66,7 +69,7 @@ export const AuthProvider = ({children}: any) => {
   };
 
   const logIn = async (username: string, password: string) => {
-    const res: loginRes = await api.login(username, password);
+    const res: loginRes = await api.login(username, password, notifToken);
     if (typeof res === 'string') {
       gotError('Revise sus credenciales');
     } else {
@@ -83,7 +86,7 @@ export const AuthProvider = ({children}: any) => {
   };
 
   const SingUp = async (data: Data) => {
-    const res: loginRes = await api.Registro(data);
+    const res: loginRes = await api.Registro({...data, notifToken});
     console.log('res', res);
     if (typeof res === 'string') {
       gotError(res);
@@ -118,3 +121,35 @@ export const AuthProvider = ({children}: any) => {
     </AuthContext.Provider>
   );
 };
+
+// Must be outside of any component LifeCycle (such as `componentDidMount`).
+PushNotification.configure({
+  // (optional) Called when Token is generated (iOS and Android)
+  onRegister: function (token) {
+    console.log('TOKEN:', token);
+    if (notifToken === '') {
+      notifToken = token.token;
+    }
+  },
+
+  // (required) Called when a remote is received or opened, or local notification is opened
+  onNotification: function (notification) {
+    console.log('NOTIFICATION:', notification);
+
+    // process the notification
+
+    // (required) Called when a remote is received or opened, or local notification is opened
+  },
+
+  // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
+  onAction: function (notification) {
+    console.log('ACTION:', notification.action);
+    console.log('NOTIFICATION:', notification);
+
+    // process the action
+  },
+
+  // Should the initial notification be popped automatically
+  // default: true
+  popInitialNotification: true,
+});

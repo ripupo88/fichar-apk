@@ -13,7 +13,12 @@ interface Props extends StackScreenProps<any, any> {
 export const ItemView = ({user}: Props) => {
   const navigator = useNavigation();
   const {username, trabajando, horaEntrada, alias, editable} = user;
-
+  console.log(user);
+  const handleNav = () => {
+    editable
+      ? navigator.navigate('CreaUsuarioScreen', {username})
+      : navigator.navigate('UserScreen', {user});
+  };
   let name: string = '';
   alias ? (name = alias) : (name = username);
   let time;
@@ -44,8 +49,7 @@ export const ItemView = ({user}: Props) => {
             name={'information-circle-outline'}
           />
         )}
-        <TouchableOpacity
-          onPress={() => navigator.navigate('CreaUsuarioScreen')}>
+        <TouchableOpacity onPress={handleNav}>
           <Text style={localstyles.text}>{name}</Text>
         </TouchableOpacity>
       </View>

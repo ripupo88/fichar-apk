@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 // import Icon from 'react-native-vector-icons/Ionicons';
 
 import {Text, View, TouchableOpacity} from 'react-native';
@@ -6,12 +6,18 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {StyleSheet} from 'react-native';
 import {styles} from '../theme/appTheme';
+import {AuthContext} from '../context/AuthContext';
+import {UserData} from '../interfaces/appInteface';
 
 export const FicharScreen = () => {
+  const {
+    state: {user},
+  } = useContext(AuthContext);
+  const {trabajando, horaEntrada}: UserData = user;
   const [camara, setCamara] = useState<'front' | 'back'>('back');
   const [fichar, setFichar] = useState(false);
   const [time, setTime] = useState(25299990);
-  const myDate = new Date(time);
+  const myDate = new Date(horaEntrada);
   const {top} = useSafeAreaInsets();
 
   useInterval(() => {

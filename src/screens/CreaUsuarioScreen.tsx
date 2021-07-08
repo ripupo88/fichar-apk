@@ -1,5 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useContext, useState} from 'react';
+import {StackScreenProps} from '@react-navigation/stack';
+import React, {useContext} from 'react';
 import {
   View,
   TextInput,
@@ -9,11 +10,14 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
-import {Api, Empresa, Usuario} from '../api/api';
+import {Api, Usuario} from '../api/api';
 import {AuthContext} from '../context/AuthContext';
 import {useForm} from '../hooks/useForm';
 
-export const CreaUsuarioScreen = () => {
+interface Props extends StackScreenProps<any, any> {}
+
+export const CreaUsuarioScreen = ({route}: Props) => {
+  const username = route.params?.username;
   const {alias, fullName, nif, onChange} = useForm({
     alias: '',
     fullName: '',
@@ -31,6 +35,7 @@ export const CreaUsuarioScreen = () => {
       alias,
       fullName,
       nif,
+      username,
     };
     const res = await api.CreaUsuario(data, token);
     if (res?.status === 201) {

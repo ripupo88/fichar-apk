@@ -1,4 +1,4 @@
-package com.navegacionapp;
+package com.ficharapk;
 
 import com.facebook.react.ReactActivity;
 
