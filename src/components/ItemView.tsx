@@ -36,7 +36,11 @@ export const ItemView = ({user}: Props) => {
 
     time = hora + ':' + minutes;
     fecha =
-      Xmas95.getDate() + '-' + Xmas95.getMonth() + '-' + Xmas95.getFullYear();
+      Xmas95.getDate() +
+      '-' +
+      (Xmas95.getMonth() + 1) +
+      '-' +
+      Xmas95.getFullYear();
   }
 
   return (

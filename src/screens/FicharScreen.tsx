@@ -7,21 +7,30 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import {StyleSheet} from 'react-native';
 import {styles} from '../theme/appTheme';
 import {AuthContext} from '../context/AuthContext';
-import {UserData} from '../interfaces/appInteface';
+import {DateTime} from 'luxon';
 
 export const FicharScreen = () => {
+  const dt = DateTime.now();
+  console.log(dt.daysInMonth);
+
   const {
     state: {user},
   } = useContext(AuthContext);
-  const {trabajando, horaEntrada}: UserData = user;
+  const {trabajando, horaEntrada} = user;
+
   const [camara, setCamara] = useState<'front' | 'back'>('back');
   const [fichar, setFichar] = useState(false);
-  const [time, setTime] = useState(25299990);
   const myDate = new Date(horaEntrada);
+  const now = new Date();
+  const [time, setTime] = useState(
+    horaEntrada ? new Date(now.getTime() - myDate.getTime()) : new Date(0),
+  );
   const {top} = useSafeAreaInsets();
 
   useInterval(() => {
-    setTime((tim) => tim + 1000);
+    if (horaEntrada.length > 5) {
+      setTime((tim) => new Date(tim.getTime() + 1000));
+    }
   }, 1000);
 
   const handleRead = (e: any) => {
@@ -60,13 +69,13 @@ export const FicharScreen = () => {
       <View style={{marginTop: top, ...LocalStyles.container}}>
         <View style={LocalStyles.timerContainer}>
           <Text style={styles.title}>
-            {myDate.getHours() < 10 && 0}
-            {myDate.getHours()}:{myDate.getMinutes() < 10 && 0}
-            {myDate.getMinutes()}
+            {time.getHours() < 10 && 0}
+            {time.getHours()}:{time.getMinutes() < 10 && 0}
+            {time.getMinutes()}
           </Text>
           <Text style={styles.title2}>
-            {myDate.getSeconds() < 10 && 0}
-            {myDate.getSeconds()}
+            {time.getSeconds() < 10 && 0}
+            {time.getSeconds()}
           </Text>
         </View>
         <TouchableOpacity
