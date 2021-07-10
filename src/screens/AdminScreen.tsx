@@ -12,11 +12,18 @@ import {Api} from '../api/api';
 import {Header} from '../components/Header';
 import {ItemView} from '../components/ItemView';
 import {AuthContext} from '../context/AuthContext';
+import {useDownload} from '../hooks/downloadFile';
 import {GetEmpresa} from '../interfaces/appInteface';
 
 export const AdminScreen = () => {
+  // useDownload('http://localhost:3001/empresas/219783');
   const [Loading, setLoading] = useState(true);
-  const [apidata, setData] = useState<GetEmpresa>();
+  const [apidata, setData] = useState<GetEmpresa>({
+    alias: '',
+    name: '',
+    cif: '',
+    data: [],
+  });
   const {
     state: {token},
   } = useContext(AuthContext);
@@ -48,7 +55,7 @@ export const AdminScreen = () => {
             <SectionList
               sections={apidata}
               showsVerticalScrollIndicator={false}
-              keyExtractor={(item, index) => item._id + index}
+              keyExtractor={(item, iindex) => item._id + iindex}
               renderItem={({item}) => <ItemView user={item} />}
               renderSectionHeader={({section: {alias}}) => (
                 <View style={localstyle.titleCont}>

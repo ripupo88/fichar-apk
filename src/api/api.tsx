@@ -19,7 +19,7 @@ export type Usuario = {
   username: string;
 };
 export class Api {
-  baseUrl = 'http://192.168.1.42:3001'; //192.168.1.42
+  baseUrl = 'http://192.168.230.121:3001'; //192.168.1.42
 
   async login(username: string, password: string, notifToken: string) {
     var data = JSON.stringify({

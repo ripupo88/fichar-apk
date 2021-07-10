@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {UserData} from '../interfaces/appInteface';
 
 interface Props extends StackScreenProps<any, any> {
-  user: UserData;
+  user?: UserData;
 }
 
 export const ItemView = ({user}: Props) => {
