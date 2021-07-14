@@ -1,13 +1,13 @@
 import {useNavigation} from '@react-navigation/native';
-import {StackScreenProps} from '@react-navigation/stack';
+// import {StackScreenProps} from '@react-navigation/stack';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {UserData} from '../interfaces/appInteface';
 
-interface Props extends StackScreenProps<any, any> {
-  user?: UserData;
+interface Props {
+  user: UserData;
 }
 
 export const ItemView = ({user}: Props) => {

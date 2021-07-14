@@ -12,18 +12,20 @@ import {Api} from '../api/api';
 import {Header} from '../components/Header';
 import {ItemView} from '../components/ItemView';
 import {AuthContext} from '../context/AuthContext';
-import {useDownload} from '../hooks/downloadFile';
+// import {useDownload} from '../hooks/downloadFile';
 import {GetEmpresa} from '../interfaces/appInteface';
 
 export const AdminScreen = () => {
   // useDownload('http://localhost:3001/empresas/219783');
   const [Loading, setLoading] = useState(true);
-  const [apidata, setData] = useState<GetEmpresa>({
-    alias: '',
-    name: '',
-    cif: '',
-    data: [],
-  });
+  const [apidata, setData] = useState<GetEmpresa[]>([
+    {
+      alias: '',
+      name: '',
+      cif: '',
+      data: [],
+    },
+  ]);
   const {
     state: {token},
   } = useContext(AuthContext);
@@ -39,7 +41,9 @@ export const AdminScreen = () => {
   const api = new Api();
   const getRes = async () => {
     console.log('llama');
-    const res: GetEmpresa = await api.GetEmpresa(token);
+    const res: GetEmpresa[] = await api.GetEmpresa(token);
+    // res.data ? (res.data = []) : null;
+    console.log(res);
     setData(res);
     setLoading(false);
   };

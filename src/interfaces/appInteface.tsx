@@ -29,5 +29,5 @@ export interface GetEmpresa {
   alias: string;
   name: string;
   cif: string;
-  data?: UserData[];
+  data: UserData[];
 }
