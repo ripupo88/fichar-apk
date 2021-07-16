@@ -12,11 +12,10 @@ import {Api} from '../api/api';
 import {Header} from '../components/Header';
 import {ItemView} from '../components/ItemView';
 import {AuthContext} from '../context/AuthContext';
-// import {useDownload} from '../hooks/downloadFile';
+import {Download} from '../hooks/downloadFile';
 import {GetEmpresa} from '../interfaces/appInteface';
 
 export const AdminScreen = () => {
-  // useDownload('http://localhost:3001/empresas/219783');
   const [Loading, setLoading] = useState(true);
   const [apidata, setData] = useState<GetEmpresa[]>([
     {
@@ -38,6 +37,12 @@ export const AdminScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
+  useEffect(() => {
+    Download(
+      'https://motivationalinterviewing.org/sites/default/files/valuescardsort_0.pdf',
+      token,
+    );
+  }, [token]);
   const api = new Api();
   const getRes = async () => {
     console.log('llama');
