@@ -29,5 +29,7 @@ export interface GetEmpresa {
   alias: string;
   name: string;
   cif: string;
+  code: string;
+  QRurl: string;
   data: UserData[];
 }

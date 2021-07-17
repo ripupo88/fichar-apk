@@ -1,7 +1,8 @@
 import {PermissionsAndroid} from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
 
-export const Download = (url: string, token: string) => {
+export const Download = (token: string, code: string) => {
+  const QRurl = 'http://192.168.1.42:3001/empresas/';
   const checkpermision = async () => {
     const permiso = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -13,7 +14,6 @@ export const Download = (url: string, token: string) => {
       },
     );
     if (permiso === PermissionsAndroid.RESULTS.GRANTED) {
-      const date = new Date();
       console.log(token);
       const {config, fs} = RNFetchBlob;
       let PictureDir = fs.dirs.DownloadDir; // this is the pictures directory. You can check the available directories in the wiki.
@@ -22,19 +22,13 @@ export const Download = (url: string, token: string) => {
         addAndroidDownloads: {
           useDownloadManager: true, // setting it to true will use the device's native download manager and will be shown in the notification bar.
           notification: true,
-          path:
-            PictureDir +
-            '/me_' +
-            Math.floor(date.getTime() + date.getSeconds() / 2) +
-            '.pdf', // this is the path where your downloaded file will live in
+          path: PictureDir + '/QRcode' + code + '.pdf', // this is the path where your downloaded file will live in
           description: 'Downloading PDF.',
         },
       };
       config(options)
-        .fetch('GET', url, {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJpY2hhciIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYyNjQwNjY4MSwiZXhwIjoxNjI4OTk4NjgxfQ.xM7BWxNMxnvCQd1ady_dNSAvVlmDOXF_fBEEo9HcZQc',
-
+        .fetch('GET', QRurl + code, {
+          Authorization: `Bearer ${token}`,
           // more headers  ..
         })
         .then((res) => {

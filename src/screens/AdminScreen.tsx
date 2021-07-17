@@ -1,7 +1,6 @@
 import {useNavigationState} from '@react-navigation/native';
 import React, {useContext, useEffect, useState} from 'react';
 import {
-  Text,
   View,
   StyleSheet,
   StatusBar,
@@ -11,8 +10,8 @@ import {
 import {Api} from '../api/api';
 import {Header} from '../components/Header';
 import {ItemView} from '../components/ItemView';
+import {ListHeader} from '../components/ListHeader';
 import {AuthContext} from '../context/AuthContext';
-import {Download} from '../hooks/downloadFile';
 import {GetEmpresa} from '../interfaces/appInteface';
 
 export const AdminScreen = () => {
@@ -22,6 +21,8 @@ export const AdminScreen = () => {
       alias: '',
       name: '',
       cif: '',
+      code: '',
+      QRurl: '',
       data: [],
     },
   ]);
@@ -37,18 +38,11 @@ export const AdminScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
-  useEffect(() => {
-    Download(
-      'https://motivationalinterviewing.org/sites/default/files/valuescardsort_0.pdf',
-      token,
-    );
-  }, [token]);
   const api = new Api();
+
   const getRes = async () => {
     console.log('llama');
     const res: GetEmpresa[] = await api.GetEmpresa(token);
-    // res.data ? (res.data = []) : null;
-    console.log(res);
     setData(res);
     setLoading(false);
   };
@@ -66,10 +60,8 @@ export const AdminScreen = () => {
               showsVerticalScrollIndicator={false}
               keyExtractor={(item, iindex) => item._id + iindex}
               renderItem={({item}) => <ItemView user={item} />}
-              renderSectionHeader={({section: {alias}}) => (
-                <View style={localstyle.titleCont}>
-                  <Text style={localstyle.title1}> {alias} </Text>
-                </View>
+              renderSectionHeader={({section: {code, alias}}) => (
+                <ListHeader data={{code, alias, token}} />
               )}
             />
           </>
@@ -83,18 +75,6 @@ const localstyle = StyleSheet.create({
   constainer: {
     flex: 1,
     backgroundColor: '#f0f0f0',
-  },
-  title1: {
-    fontSize: 20,
-  },
-  titleCont: {
-    borderWidth: 0.4,
-    borderBottomColor: '#000000aa',
-    marginTop: 8,
-    backgroundColor: 'white',
-    paddingVertical: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   container: {
     flex: 1,
