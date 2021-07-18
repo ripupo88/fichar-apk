@@ -1,11 +1,11 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import {LogBox, Text} from 'react-native';
+import {LogBox} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colores} from '../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {FicharScreen} from '../screens/FicharScreen';
+import {FicharScreen} from '../screens/FicharScreen/FicharScreen';
 import {HistoriaScreen} from '../screens/HistoriaScreen';
 import {HorarioScreen} from '../screens/HorarioScreen';
 
@@ -19,9 +19,9 @@ export const TopTabNavigator = () => {
   return (
     <Tab.Navigator
       style={{paddingTop}}
-      sceneContainerStyle={{
-        backgroundColor: 'white',
-      }}
+      // sceneContainerStyle={{
+      //   backgroundColor: 'white',
+      // }}
       tabBarOptions={{
         pressColor: colores.primary,
         showIcon: true,
@@ -34,7 +34,7 @@ export const TopTabNavigator = () => {
         },
       }}
       screenOptions={({route}) => ({
-        tabBarIcon: ({color, focused}) => {
+        tabBarIcon: ({color}) => {
           let iconName: string = '';
           switch (route.name) {
             case 'Fichar':

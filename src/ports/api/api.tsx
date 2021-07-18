@@ -132,6 +132,29 @@ export class Api {
     }
   }
 
+  async Fichar(token: string, trabajando: boolean, code: number) {
+    const myUrl = trabajando
+      ? `/registros/salida/${code}`
+      : `/registros/entrada/${code}`;
+
+    const config: AxiosRequestConfig = {
+      method: 'get',
+      url: this.baseUrl + myUrl,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    };
+    console.log(config.url);
+    try {
+      return await (await axios(config)).data;
+    } catch (error) {
+      if (error.response) {
+        return this.getError(error.response.data.message);
+      }
+    }
+  }
+
   async CreaUsuario(data: Usuario, token: string) {
     const mydata = JSON.stringify(data);
     console.log(mydata);

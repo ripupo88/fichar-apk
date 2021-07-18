@@ -1,12 +1,12 @@
 import React from 'react';
+import {LogBox, StyleSheet} from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
-import {LogBox, StyleSheet} from 'react-native';
 // import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {HistoriaScreen} from '../screens/HistoriaScreen';
 import {HorarioScreen} from '../screens/HorarioScreen';
-import {AdminScreen} from '../screens/AdminScreen';
+import {AdminScreen} from '../screens/AdminScreen/AdminScreen';
 
 LogBox.ignoreLogs(['Sending']);
 

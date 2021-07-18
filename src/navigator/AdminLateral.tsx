@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import {styles} from '../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {CreaEmpresaScreen} from '../screens/CreaEmpresaScreen';
+import {CreaEmpresaScreen} from '../screens/CreaEmpresaScreen/CreaEmpresaScreen';
 import {AdminNavigator} from './AdminNavigator';
 import {AuthContext} from '../context/AuthContext';
 

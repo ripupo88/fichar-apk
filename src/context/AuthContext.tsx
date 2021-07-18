@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {createContext, useReducer} from 'react';
 import {useEffect} from 'react';
-import {Api, Data} from '../api/api';
+import {Api, Data} from '../ports/api/api';
 import {loginRes, UserData} from '../interfaces/appInteface';
 import AuthReducer from './AuthReducer';
 import PushNotification from 'react-native-push-notification';
@@ -36,6 +36,7 @@ export interface AuthContextProps {
   SingUp: (data: Data) => void;
   LogOut: () => void;
   gotError: (err: string) => void;
+  loginByToken: () => void;
 }
 
 export const AuthContext = createContext({} as AuthContextProps);
@@ -63,7 +64,6 @@ export const AuthProvider = ({children}: any) => {
         dispatch({type: 'NoToken'});
       }
     } else {
-      console.log('object');
       dispatch({type: 'NoToken'});
     }
   };
@@ -116,6 +116,7 @@ export const AuthProvider = ({children}: any) => {
         SingUp,
         gotError,
         LogOut,
+        loginByToken,
       }}>
       {children}
     </AuthContext.Provider>

@@ -7,7 +7,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {LogInNavegation} from './LogInNavegation';
 import {useContext} from 'react';
 import {AuthContext} from '../context/AuthContext';
-import {CreaUsuarioScreen} from '../screens/CreaUsuarioScreen';
+import {CreaUsuarioScreen} from '../screens/CreaUsuarioScreen/CreaUsuarioScreen';
 import {UserScreen} from '../screens/UserScreen';
 
 const Stack = createStackNavigator();

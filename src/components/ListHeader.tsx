@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Download} from '../hooks/downloadFile';
+import {Download} from '../ports/download/downloadFile';
 
 interface Props {
   data: {alias: string; code: string; token: string};

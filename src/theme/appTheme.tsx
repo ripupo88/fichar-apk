@@ -12,13 +12,13 @@ export const styles = StyleSheet.create({
     fontFamily: 'lucida',
     fontSize: 60,
     marginLeft: 10,
-    color: 'white',
+    color: 'black',
   },
   title2: {
     fontSize: 40,
     marginRight: 10,
     marginLeft: 10,
-    color: 'white',
+    color: 'black',
   },
   botonGrande: {
     width: 100,

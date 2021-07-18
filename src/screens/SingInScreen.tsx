@@ -14,7 +14,7 @@ import {useForm} from '../hooks/useForm';
 import {LoginForm} from '../interfaces/appInteface';
 import {StackScreenProps} from '@react-navigation/stack';
 import {AuthContext} from '../context/AuthContext';
-import {Data} from '../api/api';
+import {Data} from '../ports/api/api';
 
 interface Props extends StackScreenProps<any, any> {}
 
@@ -60,6 +60,7 @@ export const SingInScreen = ({navigation}: Props) => {
     let data: Data = {
       username: user,
       password: password,
+      notifToken: '',
       role,
     };
     if (!isAdmin) {
