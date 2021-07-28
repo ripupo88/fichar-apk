@@ -18,14 +18,18 @@ export const FicharStyle = () => {
     },
     botonFichar: {
       backgroundColor: '#bbbbff',
-      borderRadius: 25,
-      padding: 15,
+      borderRadius: 0,
+      padding: 10,
       borderWidth: 1,
+      margin: 10,
     },
     botonCamara: {
       backgroundColor: '#F5A653',
-      borderRadius: 25,
+      borderRadius: 0,
       padding: 15,
+    },
+    botonsCont: {
+      flexDirection: 'row',
     },
     botonAtras: {
       alignItems: 'center',
@@ -35,7 +39,7 @@ export const FicharStyle = () => {
       height: 55,
       width: 100,
     },
-    textoFichar: {color: 'black', fontSize: 50, alignSelf: 'center'},
+    textoFichar: {color: 'black', fontSize: 30, alignSelf: 'center'},
     textoAtras: {color: '#252525', fontSize: 22},
     botonesContainer: {flexDirection: 'row', justifyContent: 'space-between'},
   });

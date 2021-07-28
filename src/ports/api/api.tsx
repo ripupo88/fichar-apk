@@ -19,7 +19,7 @@ export type Usuario = {
   username: string;
 };
 export class Api {
-  baseUrl = 'http://192.168.1.42:3001'; //192.168.1.42 //192.168.230.121
+  baseUrl = 'http://192.168.230.121:3001'; //192.168.1.42 //192.168.230.121
 
   async login(username: string, password: string, notifToken: string) {
     var data = JSON.stringify({
@@ -34,7 +34,7 @@ export class Api {
       headers: {
         'Content-Type': 'application/json',
       },
-      data: data,
+      data,
     };
     try {
       return await (await axios(config)).data;
@@ -54,7 +54,6 @@ export class Api {
 
   async Registro(data: Data) {
     var mydata = JSON.stringify(data);
-    console.log(data);
     var config: AxiosRequestConfig = {
       method: 'post',
       url: this.baseUrl + '/auth/singup',
@@ -114,6 +113,7 @@ export class Api {
       }
     }
   }
+
   async GetEmpresa(token: string) {
     const config: AxiosRequestConfig = {
       method: 'get',

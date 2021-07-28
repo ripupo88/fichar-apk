@@ -55,11 +55,18 @@ export const FicharScreen = () => {
             {time.getSeconds()}
           </Text>
         </View>
-        <TouchableOpacity
-          onPress={() => setFichar(true)}
-          style={FicharStyle().botonFichar}>
-          <Text style={FicharStyle().textoFichar}>Fichar</Text>
-        </TouchableOpacity>
+        <View style={FicharStyle().botonsCont}>
+          <TouchableOpacity
+            onPress={() => setFichar(true)}
+            style={FicharStyle().botonFichar}>
+            <Text style={FicharStyle().textoFichar}>Pausa</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setFichar(true)}
+            style={FicharStyle().botonFichar}>
+            <Text style={FicharStyle().textoFichar}>Fichar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

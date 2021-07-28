@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -8,8 +9,10 @@ interface Props {
 }
 
 export const ListHeader = ({data}: Props) => {
+  const navegate = useNavigation();
   const {alias, code, token} = data;
   const handleOptions = () => {
+    navegate.navigate('EmpresaScreen');
     console.log('este', data);
     Download(token, code);
   };

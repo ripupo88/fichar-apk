@@ -1,6 +1,7 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {Datos} from '../components/Datos';
 import {Header} from '../components/Header';
 import {UserData} from '../interfaces/appInteface';
 
@@ -12,9 +13,10 @@ export const UserScreen = ({route}: Props) => {
   return (
     <View>
       <Header text={alias || ''} />
-      <Text>Datos del trabajador</Text>
-      <Text>Nombre:</Text>
-      <Text>{fullName}</Text>
+      <Datos title={'Nombre'} data={fullName || ''} />
+      <Datos title={'Nombre'} data={fullName || ''} />
+      <Datos title={'Nombre'} data={fullName || ''} />
+
       <Text>DNI/NIE:</Text>
       <Text>{nif}</Text>
       <Text>Nombre de Usuario:</Text>
