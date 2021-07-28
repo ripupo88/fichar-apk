@@ -5,14 +5,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Download} from '../ports/download/downloadFile';
 
 interface Props {
-  data: {alias: string; code: string; token: string};
+  data: {alias: string; code: string; token: string; name: string; cif: string};
 }
 
 export const ListHeader = ({data}: Props) => {
   const navegate = useNavigation();
   const {alias, code, token} = data;
   const handleOptions = () => {
-    navegate.navigate('EmpresaScreen');
+    navegate.navigate('EmpresaScreen', {data});
     console.log('este', data);
     Download(token, code);
   };

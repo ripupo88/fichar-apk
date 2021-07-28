@@ -21,9 +21,17 @@ export const MainNavegation = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: true}}>
       {loading ? (
-        <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
+        <Stack.Screen
+          name="LoadingScreen"
+          component={LoadingScreen}
+          options={{headerShown: false}}
+        />
       ) : !isLoggedin ? (
-        <Stack.Screen name="LogInNavegation" component={LogInNavegation} />
+        <Stack.Screen
+          name="LogInNavegation"
+          component={LogInNavegation}
+          options={{headerShown: false}}
+        />
       ) : role === 'ADMIN' ? (
         <>
           <Stack.Screen

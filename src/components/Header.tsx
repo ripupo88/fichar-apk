@@ -15,11 +15,12 @@ export const Header = ({text}: Props) => {
 
 const localstyles = StyleSheet.create({
   container: {
+    marginTop: 5,
     alignItems: 'center',
     backgroundColor: 'white',
     paddingVertical: 10,
     borderBottomWidth: 0.6,
-    borderBottomColor: '#000000aa',
+    borderBottomColor: '#00000022',
   },
   headerText: {
     fontSize: 25,

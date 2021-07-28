@@ -22,8 +22,8 @@ export const AdminScreen = () => {
               showsVerticalScrollIndicator={false}
               keyExtractor={(item, iindex) => item._id + iindex}
               renderItem={({item}) => <ItemView user={item} />}
-              renderSectionHeader={({section: {code, alias}}) => (
-                <ListHeader data={{code, alias, token}} />
+              renderSectionHeader={({section: {code, alias, name, cif}}) => (
+                <ListHeader data={{code, alias, token, name, cif}} />
               )}
             />
           </>
