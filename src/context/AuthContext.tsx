@@ -87,7 +87,7 @@ export const AuthProvider = ({children}: any) => {
 
   const SingUp = async (data: Data) => {
     const res: loginRes = await api.Registro({...data, notifToken});
-    console.log('res', res);
+
     if (typeof res === 'string') {
       gotError(res);
     } else {
@@ -127,7 +127,6 @@ export const AuthProvider = ({children}: any) => {
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: function (token) {
-    console.log('TOKEN:', token);
     if (notifToken === '') {
       notifToken = token.token;
     }

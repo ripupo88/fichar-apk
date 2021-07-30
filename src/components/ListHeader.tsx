@@ -13,7 +13,7 @@ export const ListHeader = ({data}: Props) => {
   const {alias, code, token} = data;
   const handleOptions = () => {
     navegate.navigate('EmpresaScreen', {data});
-    console.log('este', data);
+
     Download(token, code);
   };
   return (

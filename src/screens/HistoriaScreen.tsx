@@ -8,9 +8,6 @@ export const HistoriaScreen = () => {
   useEffect(() => {}, []);
 
   //   const date = DateTime.now().setLocale('es');
-  console.log(
-    DateTime.now().setLocale('es').toLocaleString(DateTime.DATE_FULL),
-  );
 
   return (
     <View>

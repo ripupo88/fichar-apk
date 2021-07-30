@@ -13,7 +13,7 @@ interface Props {
 export const ItemView = ({user}: Props) => {
   const navigator = useNavigation();
   const {username, trabajando, horaEntrada, alias, editable} = user;
-  console.log(user);
+
   const handleNav = () => {
     editable
       ? navigator.navigate('CreaUsuarioScreen', {username})

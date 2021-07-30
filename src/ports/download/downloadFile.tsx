@@ -14,7 +14,6 @@ export const Download = (token: string, code: string) => {
       },
     );
     if (permiso === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log(token);
       const {config, fs} = RNFetchBlob;
       let PictureDir = fs.dirs.DownloadDir; // this is the pictures directory. You can check the available directories in the wiki.
       let options = {

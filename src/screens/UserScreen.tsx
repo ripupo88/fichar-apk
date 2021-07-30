@@ -10,7 +10,7 @@ interface Props extends StackScreenProps<any, any> {}
 
 export const UserScreen = ({route}: Props) => {
   const {username, activo, alias, fullName, nif}: UserData = route.params?.user;
-  console.log(nif);
+
   return (
     <ScrollView>
       <View>

@@ -25,7 +25,7 @@ export const CreaUsuarioHook = (username: string) => {
       nif,
       username,
     };
-    console.log(data);
+
     const res = await api.CreaUsuario(data, token);
     if (res?.status === 201) {
       onChange('', 'fullName');

@@ -91,9 +91,8 @@ export class Api {
   }
 
   async CreaEmpresa(data: Empresa, token: string) {
-    console.log(token);
     const mydata = JSON.stringify(data);
-    console.log(mydata);
+
     const config: AxiosRequestConfig = {
       method: 'post',
       url: this.baseUrl + '/empresas',
@@ -145,7 +144,7 @@ export class Api {
         'Content-Type': 'application/json',
       },
     };
-    console.log(config.url);
+
     try {
       return await (await axios(config)).data;
     } catch (error) {
@@ -157,7 +156,7 @@ export class Api {
 
   async CreaUsuario(data: Usuario, token: string) {
     const mydata = JSON.stringify(data);
-    console.log(mydata);
+
     const config: AxiosRequestConfig = {
       method: 'post',
       url: this.baseUrl + '/auth/activate',

@@ -31,7 +31,6 @@ export const useAdmin = () => {
   const api = new Api();
 
   const getRes = async () => {
-    console.log('llama');
     const res: GetEmpresa[] = await api.GetEmpresa(token);
     setData(res);
     setLoading(false);
