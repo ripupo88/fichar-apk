@@ -19,6 +19,13 @@ export interface UserData {
   nif?: string;
   activo?: boolean;
   trabajaPara?: string;
+  notif: {
+    entrada: boolean;
+    salida: boolean;
+    llegaTarde: boolean;
+    salidaTemprano: boolean;
+    nuevoDisp: boolean;
+  };
 }
 
 export interface loginRes {

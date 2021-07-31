@@ -46,6 +46,7 @@ export const AuthProvider = ({children}: any) => {
   const api = new Api();
   useEffect(() => {
     loginByToken();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

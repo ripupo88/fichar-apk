@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Download} from '../ports/download/downloadFile';
 
 interface Props {
-  data: {alias: string; code: string; token: string; name: string; cif: string};
+  data: {code: string; token: string; alias: string; cif: string; name: string};
 }
 
 export const ListHeader = ({data}: Props) => {

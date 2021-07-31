@@ -1,12 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Text, View} from 'react-native';
-import {DateTime} from 'luxon';
+// import {DateTime} from 'luxon';
 import {Header} from '../components/Header';
 
 export const HistoriaScreen = () => {
-  useEffect(() => {}, []);
-
   //   const date = DateTime.now().setLocale('es');
 
   return (

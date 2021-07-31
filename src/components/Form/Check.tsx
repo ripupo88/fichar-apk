@@ -1,5 +1,5 @@
 import CheckBox from '@react-native-community/checkbox';
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {styleForm} from './StyleFrom';
 
@@ -7,11 +7,10 @@ type Props = {
   title: string;
   data: string;
   activo: boolean;
+  onChange: (v: boolean) => void;
 };
 
-export const Check = ({title, data, activo}: Props) => {
-  const [checked, setChecked] = useState(activo);
-
+export const Check = ({title, data, activo, onChange}: Props) => {
   return (
     <>
       <View style={styleForm().container}>
@@ -20,9 +19,9 @@ export const Check = ({title, data, activo}: Props) => {
           <Text style={styleForm().data}>{data}</Text>
           <CheckBox
             disabled={false}
-            value={checked}
+            value={activo}
             tintColors={{true: 'blue', false: 'Black'}}
-            onValueChange={() => setChecked((it) => !it)}
+            onValueChange={() => onChange(activo)}
           />
         </View>
         <View style={styleForm().separator} />

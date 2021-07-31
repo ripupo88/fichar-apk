@@ -1,21 +1,44 @@
 import {useState} from 'react';
+import {GetEmpresa} from '../interfaces/appInteface';
 import {Sock} from '../Socket/socket';
 
-export const useSocket = <T extends Object>(initState: T) => {
-  const [state, setState] = useState(initState);
+type Notif = {
+  entrada: boolean;
+  salida: boolean;
+  llegaTarde: boolean;
+  salidaTemprano: boolean;
+  nuevoDisp: boolean;
+};
+
+export const useAdminSocket = () => {
+  // const [state, setState] = useState(initState);
+  const [empresas, setEmpresas] = useState<GetEmpresa[]>([
+    {
+      alias: '',
+      name: '',
+      cif: '',
+      code: '',
+      QRurl: '',
+      data: [],
+    },
+  ]);
+
   const mySocket = Sock.getSocket();
 
-  const onChange = (value: any, field: keyof T) => {
-    mySocket.emit('message', {asd: 'as'});
-    setState({
-      ...state,
-      [field]: value,
+  const wsSetUser = (userData: Notif, userId: string) => {
+    mySocket.emit('user', {...userData, userId});
+  };
+
+  const wsEmpresa = (user: string) => {
+    mySocket.emit('empresa', {user});
+    mySocket.on('empresa', (inf) => {
+      setEmpresas(inf);
     });
   };
 
   return {
-    ...state,
-    form: state,
-    onChange,
+    empresa: empresas,
+    wsEmpresa,
+    wsSetUser,
   };
 };

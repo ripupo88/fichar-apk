@@ -7,7 +7,7 @@ import {useAdmin} from './AdminHook';
 import {adminStyle} from './AdminStyle';
 
 export const AdminScreen = () => {
-  const {Loading, apidata, token} = useAdmin();
+  const {Loading, empresa: apidata, token} = useAdmin();
 
   return (
     <View style={adminStyle().container}>
@@ -22,8 +22,8 @@ export const AdminScreen = () => {
               showsVerticalScrollIndicator={false}
               keyExtractor={(item, iindex) => item._id + iindex}
               renderItem={({item}) => <ItemView user={item} />}
-              renderSectionHeader={({section: {code, alias, name, cif}}) => (
-                <ListHeader data={{code, alias, token, name, cif}} />
+              renderSectionHeader={({section: {code, alias, cif, name}}) => (
+                <ListHeader data={{code, alias, token, cif, name}} />
               )}
             />
           </>

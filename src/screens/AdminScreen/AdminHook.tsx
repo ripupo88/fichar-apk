@@ -1,39 +1,26 @@
 import {useNavigationState} from '@react-navigation/native';
 import {useContext, useEffect, useState} from 'react';
-import {Api} from '../../ports/api/api';
 import {AuthContext} from '../../context/AuthContext';
-import {GetEmpresa} from '../../interfaces/appInteface';
+import {useAdminSocket} from '../../hooks/useSocket';
 
 export const useAdmin = () => {
   const [Loading, setLoading] = useState(true);
-  const [apidata, setData] = useState<GetEmpresa[]>([
-    {
-      alias: '',
-      name: '',
-      cif: '',
-      code: '',
-      QRurl: '',
-      data: [],
-    },
-  ]);
+
   const {
-    state: {token},
+    state: {token, user},
   } = useContext(AuthContext);
   const index = useNavigationState((state) => state.index);
-
+  console.log(index);
+  const {empresa, wsEmpresa} = useAdminSocket();
+  console.log(empresa[0].data);
   useEffect(() => {
-    if (index === 0) {
-      getRes();
+    const userId = user?._id.toString();
+    if (index === 0 && userId) {
+      wsEmpresa(userId);
+      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
-  const api = new Api();
-
-  const getRes = async () => {
-    const res: GetEmpresa[] = await api.GetEmpresa(token);
-    setData(res);
-    setLoading(false);
-  };
-  return {Loading, apidata, token};
+  return {Loading, empresa, token};
 };

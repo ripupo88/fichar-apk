@@ -32,7 +32,7 @@ export const Download = (token: string, code: string) => {
         })
         .then((res) => {
           // do some magic here
-          console.log(res);
+          // console.log(res);
         });
     }
   };
