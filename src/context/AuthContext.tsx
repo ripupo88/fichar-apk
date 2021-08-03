@@ -153,4 +153,5 @@ PushNotification.configure({
   // Should the initial notification be popped automatically
   // default: true
   popInitialNotification: true,
+  requestPermissions: true,
 });

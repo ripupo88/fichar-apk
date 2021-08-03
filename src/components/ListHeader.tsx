@@ -2,7 +2,6 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Download} from '../ports/download/downloadFile';
 
 interface Props {
   data: {code: string; token: string; alias: string; cif: string; name: string};
@@ -10,11 +9,9 @@ interface Props {
 
 export const ListHeader = ({data}: Props) => {
   const navegate = useNavigation();
-  const {alias, code, token} = data;
+  const {alias} = data;
   const handleOptions = () => {
     navegate.navigate('EmpresaScreen', {data});
-
-    Download(token, code);
   };
   return (
     <View style={localstyles.titleCont}>

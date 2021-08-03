@@ -1,11 +1,12 @@
 import {StackScreenProps} from '@react-navigation/stack';
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {ScrollView, View} from 'react-native';
 import {Check} from '../components/Form/Check';
 import {Datos} from '../components/Form/Datos';
 import {Header} from '../components/Header';
+import {AuthContext} from '../context/AuthContext';
+import {EmpresaContext} from '../context/EmpresaContext';
 import {useForm} from '../hooks/useForm';
-import {useAdminSocket} from '../hooks/useSocket';
 import {UserData} from '../interfaces/appInteface';
 
 interface Props extends StackScreenProps<any, any> {}
@@ -31,9 +32,14 @@ export const UserScreen = ({route}: Props) => {
     form,
   } = useForm(notif);
 
-  const {wsSetUser} = useAdminSocket();
+  const {
+    state: {user},
+  } = useContext(AuthContext);
+  const userId = user?._id.toString();
+  const {wsSetUser} = useContext(EmpresaContext);
+
   useEffect(() => {
-    wsSetUser(form, _id);
+    wsSetUser(form, _id, userId || '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form]);
 

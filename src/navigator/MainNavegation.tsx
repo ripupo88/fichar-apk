@@ -56,7 +56,11 @@ export const MainNavegation = () => {
           />
         </>
       ) : (
-        <Stack.Screen name="MenuLateral" component={MenuLateral} />
+        <Stack.Screen
+          name="MenuLateral"
+          options={{headerShown: false}}
+          component={MenuLateral}
+        />
       )}
     </Stack.Navigator>
   );

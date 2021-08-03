@@ -5,7 +5,7 @@ export class Sock {
   public socket: Socket;
 
   constructor() {
-    this.socket = io('http://192.168.230.121:3003');
+    this.socket = io('http://192.168.1.42:3003');
   }
 
   static getSocket() {
