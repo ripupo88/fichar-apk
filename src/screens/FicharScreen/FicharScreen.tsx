@@ -1,48 +1,19 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 // import Icon from 'react-native-vector-icons/Ionicons';
 
 import {Text, View, TouchableOpacity} from 'react-native';
-import QRCodeScanner from 'react-native-qrcode-scanner';
 import {styles} from '../../theme/appTheme';
 // import {DateTime} from 'luxon';
 import {FicharHook} from './FicharHook';
 import {FicharStyle} from './FicharStyle';
 
 export const FicharScreen = () => {
-  const {
-    camara,
-    fichar,
-    time,
-    top,
-    handleRead,
-    setCamara,
-    setFichar,
-  } = FicharHook();
+  const {time, top, setFichar} = FicharHook();
+  const navigator = useNavigation();
 
-  if (fichar) {
-    return (
-      <>
-        <View style={FicharStyle().botonesContainer}>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={FicharStyle().botonAtras}
-            onPress={() => setFichar(false)}>
-            <Text style={FicharStyle().textoAtras}>atras</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={FicharStyle().botonAtras}
-            onPress={() =>
-              setCamara((cam) => (cam === 'back' ? 'front' : 'back'))
-            }>
-            <Text style={FicharStyle().textoAtras}>Cam</Text>
-          </TouchableOpacity>
-        </View>
-        <QRCodeScanner cameraType={camara} onRead={handleRead} />
-      </>
-    );
-  } else {
-    return (
+  return (
+    <>
       <View style={{marginTop: top, ...FicharStyle().container}}>
         <View style={FicharStyle().timerContainer}>
           <Text style={styles.title}>
@@ -62,12 +33,12 @@ export const FicharScreen = () => {
             <Text style={FicharStyle().textoFichar}>Pausa</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => setFichar(true)}
+            onPress={() => navigator.navigate('QRScanScreen')}
             style={FicharStyle().botonFichar}>
             <Text style={FicharStyle().textoFichar}>Fichar</Text>
           </TouchableOpacity>
         </View>
       </View>
-    );
-  }
+    </>
+  );
 };

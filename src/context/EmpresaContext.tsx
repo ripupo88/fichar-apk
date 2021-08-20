@@ -12,7 +12,7 @@ type Notif = {
 export interface EmpresaContextProps {
   empresas: GetEmpresa[];
   wsSetUser: (userData: Notif, userId: string, _id: string) => void;
-  wsEmpresa: (user: string) => void;
+  wsEmpresa: (user: string, abort?: boolean) => void;
 }
 
 export const EmpresaContext = createContext({} as EmpresaContextProps);
@@ -35,11 +35,13 @@ export const EmpresaProvider = ({children}: any) => {
     mySocket.emit('user', {...userData, userId, admin: _id});
   };
 
-  const wsEmpresa = (user: string) => {
-    mySocket.emit('empresa', {user});
-    mySocket.on('empresa', (inf) => {
-      setEmpresas(inf);
-    });
+  const wsEmpresa = (user: string, abort?: boolean) => {
+    if (!abort) {
+      mySocket.emit('empresa', {user});
+      mySocket.on('empresa', (inf) => {
+        setEmpresas(inf);
+      });
+    }
   };
 
   return (

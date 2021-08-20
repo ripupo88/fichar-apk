@@ -19,6 +19,9 @@ export const useAdmin = () => {
         wsEmpresa(userId);
         setLoading(false);
       }
+      return () => {
+        wsEmpresa('', true);
+      };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );

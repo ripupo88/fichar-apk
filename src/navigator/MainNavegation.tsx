@@ -10,6 +10,7 @@ import {AuthContext} from '../context/AuthContext';
 import {CreaUsuarioScreen} from '../screens/CreaUsuarioScreen/CreaUsuarioScreen';
 import {UserScreen} from '../screens/UserScreen';
 import {EmpresaScreen} from '../screens/EmpresaScreen';
+import {QRScanScreen} from '../screens/QRScanScreen';
 
 const Stack = createStackNavigator();
 
@@ -56,11 +57,18 @@ export const MainNavegation = () => {
           />
         </>
       ) : (
-        <Stack.Screen
-          name="MenuLateral"
-          options={{headerShown: false}}
-          component={MenuLateral}
-        />
+        <>
+          <Stack.Screen
+            name="MenuLateral"
+            options={{headerShown: false}}
+            component={MenuLateral}
+          />
+          <Stack.Screen
+            name="QRScanScreen"
+            component={QRScanScreen}
+            options={{headerShown: false}}
+          />
+        </>
       )}
     </Stack.Navigator>
   );
