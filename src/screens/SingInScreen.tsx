@@ -24,20 +24,14 @@ export const SingInScreen = ({navigation}: Props) => {
     gotError,
     state: {error},
   } = useContext(AuthContext);
-  const {
-    isAdmin,
-    password,
-    password2,
-    user,
-    code,
-    onChange,
-  } = useForm<LoginForm>({
-    isAdmin: false,
-    password: '',
-    password2: '',
-    user: '',
-    code: '',
-  });
+  const {isAdmin, password, password2, user, code, onChange} =
+    useForm<LoginForm>({
+      isAdmin: false,
+      password: '',
+      password2: '',
+      user: '',
+      code: '',
+    });
 
   useEffect(() => {
     if (error !== '') {
@@ -48,8 +42,7 @@ export const SingInScreen = ({navigation}: Props) => {
         },
       ]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
+  }, [error, gotError]);
 
   const handleRegsitro = async () => {
     if (password !== password2) {

@@ -2,7 +2,7 @@ import {PermissionsAndroid} from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
 
 export const Download = (token: string, code: string) => {
-  const QRurl = 'http://192.168.1.42:3001/empresas/';
+  const QRurl = 'http://192.168.1.40:3001/empresas/';
   const checkpermision = async () => {
     const permiso = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,

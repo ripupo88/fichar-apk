@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import {useContext, useEffect, useRef, useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {AuthContext} from '../../context/AuthContext';
@@ -8,13 +9,12 @@ export const FicharHook = () => {
     state: {user, token},
     loginByToken,
   } = useContext(AuthContext);
-
+  const navigator = useNavigation();
   const trabajando = user?.trabajando;
   const horaEntrada = user?.horaEntrada;
   const myDate = new Date(horaEntrada || 0);
 
   const [camara, setCamara] = useState<'front' | 'back'>('back');
-  const [fichar, setFichar] = useState(false);
   const now = new Date();
   const [time, setTime] = useState(
     horaEntrada ? new Date(now.getTime() - myDate.getTime()) : new Date(0),
@@ -33,16 +33,15 @@ export const FicharHook = () => {
     if (typeof res !== 'string') {
       loginByToken();
     }
-    setFichar(false);
+    navigator.goBack();
   };
   return {
     camara,
-    fichar,
     time,
     top,
+    navigator,
     setCamara,
     handleRead,
-    setFichar,
   };
 };
 

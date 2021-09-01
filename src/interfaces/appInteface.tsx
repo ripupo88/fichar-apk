@@ -12,6 +12,7 @@ export interface UserData {
   username: string;
   editable: boolean;
   horaEntrada?: string;
+  horaSalida?: string;
   trabajando?: boolean;
   empresas?: string[];
   role?: 'ADMIN' | 'USER';

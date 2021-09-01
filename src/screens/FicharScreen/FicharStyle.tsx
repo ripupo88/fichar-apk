@@ -33,14 +33,30 @@ export const FicharStyle = () => {
     },
     botonAtras: {
       alignItems: 'center',
-      backgroundColor: '#F5A653',
-      borderRadius: 25,
+      backgroundColor: '#000',
+      borderRadius: 100,
       padding: 5,
-      height: 55,
-      width: 100,
+      height: 60,
+      width: 60,
+      margin: 10,
     },
     textoFichar: {color: 'black', fontSize: 30, alignSelf: 'center'},
     textoAtras: {color: '#252525', fontSize: 22},
-    botonesContainer: {flexDirection: 'row', justifyContent: 'space-between'},
+    botonesContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      position: 'absolute',
+    },
+    iconStyle: {
+      color: 'white',
+    },
+    marker: {
+      borderWidth: 2,
+      width: 200,
+      height: 200,
+      borderColor: 'black',
+      position: 'absolute',
+      alignSelf: 'center',
+    },
   });
 };

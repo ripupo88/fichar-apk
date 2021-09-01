@@ -12,15 +12,8 @@ import {UserData} from '../interfaces/appInteface';
 interface Props extends StackScreenProps<any, any> {}
 
 export const UserScreen = ({route}: Props) => {
-  const {
-    username,
-    activo,
-    alias,
-    fullName,
-    nif,
-    notif,
-    _id,
-  }: UserData = route.params?.user;
+  const {username, activo, alias, fullName, nif, notif, _id}: UserData =
+    route.params?.user;
 
   const {
     entrada,
@@ -40,6 +33,9 @@ export const UserScreen = ({route}: Props) => {
 
   useEffect(() => {
     wsSetUser(form, _id, userId || '');
+    return () => {
+      wsSetUser(form, _id, '', true);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form]);
 

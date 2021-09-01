@@ -31,7 +31,7 @@ const localstyles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 0.4,
     borderBottomColor: '#000000aa',
-    marginTop: 8,
+    marginVertical: 3,
     backgroundColor: 'white',
     paddingVertical: 10,
     justifyContent: 'space-between',

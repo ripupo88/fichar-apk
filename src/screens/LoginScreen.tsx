@@ -33,8 +33,7 @@ export const LoginScreen = ({navigation}: Props) => {
         },
       ]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
+  }, [error, gotError, onChange]);
 
   const handleLogin = async () => {
     onChange('', 'password');

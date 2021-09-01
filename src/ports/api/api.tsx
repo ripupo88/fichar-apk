@@ -19,7 +19,7 @@ export type Usuario = {
   username: string;
 };
 export class Api {
-  baseUrl = 'http://192.168.1.42:3001'; //192.168.1.42 //192.168.230.121
+  baseUrl = 'http://192.168.1.40:3001'; //192.168.1.42 //192.168.230.121
 
   async login(username: string, password: string, notifToken: string) {
     var data = JSON.stringify({
@@ -37,7 +37,9 @@ export class Api {
       data,
     };
     try {
-      return await (await axios(config)).data;
+      return await (
+        await axios(config)
+      ).data;
     } catch (error) {
       if (error.response) {
         return this.getError(error.response.data.message);
@@ -63,7 +65,9 @@ export class Api {
       data: mydata,
     };
     try {
-      return await (await axios(config)).data;
+      return await (
+        await axios(config)
+      ).data;
     } catch (error) {
       if (error.response) {
         return this.getError(error.response.data.message);
@@ -82,7 +86,9 @@ export class Api {
       data: {token},
     };
     try {
-      return await (await axios(config)).data;
+      return await (
+        await axios(config)
+      ).data;
     } catch (error) {
       if (error.response) {
         return this.getError(error.response.data.message);
@@ -123,7 +129,9 @@ export class Api {
       },
     };
     try {
-      return await (await axios(config)).data;
+      return await (
+        await axios(config)
+      ).data;
     } catch (error) {
       if (error.response) {
         return this.getError(error.response.data.message);
@@ -146,7 +154,9 @@ export class Api {
     };
 
     try {
-      return await (await axios(config)).data;
+      return await (
+        await axios(config)
+      ).data;
     } catch (error) {
       if (error.response) {
         return this.getError(error.response.data.message);

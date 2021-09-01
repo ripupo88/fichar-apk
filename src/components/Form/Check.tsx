@@ -20,7 +20,7 @@ export const Check = ({title, data, activo, onChange}: Props) => {
           <CheckBox
             disabled={false}
             value={activo}
-            tintColors={{true: 'blue', false: 'Black'}}
+            tintColors={{true: '#999', false: 'Black'}}
             onValueChange={() => onChange(activo)}
           />
         </View>

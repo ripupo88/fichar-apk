@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {createContext, useReducer} from 'react';
+import React, {createContext, useCallback, useReducer} from 'react';
 import {useEffect} from 'react';
 import {Api, Data} from '../ports/api/api';
 import {loginRes, UserData} from '../interfaces/appInteface';
@@ -11,6 +11,7 @@ import {
   getModel,
   getBrand,
 } from 'react-native-device-info';
+import {useRef} from 'react';
 let notifToken: string = '';
 export interface AuthState {
   isLoggedin: boolean;
@@ -36,41 +37,52 @@ export interface AuthContextProps {
   SingUp: (data: Data) => void;
   LogOut: () => void;
   gotError: (err: string) => void;
-  loginByToken: () => void;
+  loginByToken: (cancel?: boolean) => void;
 }
 
 export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({children}: any) => {
   const [state, dispatch] = useReducer(AuthReducer, AuthInitialState);
-  const api = new Api();
+  const api = useRef(new Api());
+  const loginByToken = useCallback(
+    async (cancel?: boolean) => {
+      console.log('llama ya');
+      if (!cancel) {
+        const token = await AsyncStorage.getItem('token');
+        if (typeof token === 'string' && token !== '') {
+          const res = await api.current.Token(token);
+          if (typeof res !== 'undefined' && typeof res !== 'string') {
+            await AsyncStorage.setItem('token', res.accesToken);
+            dispatch({
+              type: 'LogIn',
+              payload: {user: res.user, token: res.accesToken},
+            });
+          } else {
+            AsyncStorage.removeItem('token');
+            dispatch({type: 'NoToken'});
+          }
+        } else {
+          dispatch({type: 'NoToken'});
+        }
+      }
+    },
+    [api],
+  );
+
   useEffect(() => {
     loginByToken();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const loginByToken = async () => {
-    const token = await AsyncStorage.getItem('token');
-    if (typeof token === 'string' && token !== '') {
-      const res = await api.Token(token);
-      if (typeof res !== 'undefined' && typeof res !== 'string') {
-        await AsyncStorage.setItem('token', res.accesToken);
-        dispatch({
-          type: 'LogIn',
-          payload: {user: res.user, token: res.accesToken},
-        });
-      } else {
-        AsyncStorage.removeItem('token');
-        dispatch({type: 'NoToken'});
-      }
-    } else {
-      dispatch({type: 'NoToken'});
-    }
-  };
+    return () => {
+      loginByToken(true);
+    };
+  }, [loginByToken]);
 
   const logIn = async (username: string, password: string) => {
-    const res: loginRes = await api.login(username, password, notifToken);
+    const res: loginRes = await api.current.login(
+      username,
+      password,
+      notifToken,
+    );
     if (typeof res === 'string') {
       gotError('Revise sus credenciales');
     } else {
@@ -87,7 +99,7 @@ export const AuthProvider = ({children}: any) => {
   };
 
   const SingUp = async (data: Data) => {
-    const res: loginRes = await api.Registro({...data, notifToken});
+    const res: loginRes = await api.current.Registro({...data, notifToken});
 
     if (typeof res === 'string') {
       gotError(res);
@@ -100,9 +112,9 @@ export const AuthProvider = ({children}: any) => {
     }
   };
 
-  const gotError = (err: string) => {
+  const gotError = useCallback((err: string) => {
     dispatch({type: 'Error', payload: err});
-  };
+  }, []);
 
   const LogOut = async () => {
     await AsyncStorage.removeItem('token');
